@@ -187,12 +187,15 @@ class ItemController extends Controller
 
         $item->delete();
 
-        // Prefer returning back to the list page if available.
+        // Prefer returning to the items list after deletion to avoid redirecting to a now-deleted detail page.
+        $indexUrl = route('admin.items.index');
+
         if (request()->wantsJson() || request()->ajax()) {
-            return response()->json(['success' => true, 'message' => 'Item berhasil dihapus.']);
+            // include the index URL so clients can redirect or refresh the grid if they wish
+            return response()->json(['success' => true, 'message' => 'Item berhasil dihapus.', 'redirect' => $indexUrl]);
         }
 
-        return redirect()->back()->with('success', 'Item berhasil dihapus.');
+        return redirect()->route('admin.items.index')->with('success', 'Item berhasil dihapus.');
     }
 
     // Browse / index list of items with optional category filter

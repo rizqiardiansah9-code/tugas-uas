@@ -93,7 +93,7 @@
                             $rarityMap = [
                                 'common' => ['label' => 'Common', 'color' => '#6b7280'],
                                 'uncommon' => ['label' => 'Uncommon', 'color' => '#16a34a'],
-                                'rare' => ['label' => 'Rare', 'color' => '#2563eb'],
+                                'rare' => ['label' => 'Rare', 'color' => '#3b82f6'],
                                 'mythical' => ['label' => 'Mythical', 'color' => '#7c3aed'],
                                 'legendary' => ['label' => 'Legendary', 'color' => '#f59e0b'],
                                 'ancient' => ['label' => 'Ancient', 'color' => '#3730a3'],
@@ -230,18 +230,18 @@
         <div x-show="showDeleteModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center">
             <div class="absolute inset-0 bg-black/60" @click="showDeleteModal = false"></div>
             <div class="relative bg-app-card border border-app-border rounded-lg p-6 w-full max-w-md mx-4">
-                <h3 class="text-lg font-semibold text-white">Konfirmasi Hapus Item</h3>
-                <p class="text-app-muted mt-2">Anda akan menghapus item berikut:</p>
+                <h3 class="text-lg font-semibold text-white">Confirm To Delete Item</h3>
+                <p class="text-app-muted mt-2">You will delete the following items:</p>
                 <p class="font-semibold text-white mt-3" x-text="confirmDelete.name"></p>
-                <p class="text-sm text-app-muted mt-1">Tindakan ini tidak dapat dibatalkan. Gambar item akan dihapus juga.</p>
+                <p class="text-sm text-app-muted mt-1">This action cannot be undone. The item image will be deleted as well.</p>
 
                 <div class="mt-6 flex justify-end gap-3">
-                    <button type="button" @click="showDeleteModal = false" class="px-4 py-2 rounded bg-app-bg/60 text-app-muted">Batal</button>
+                    <button type="button" @click="showDeleteModal = false" class="px-4 py-2 rounded bg-app-bg/60 text-app-muted">Cancle</button>
 
                     <form x-bind:action="'{{ url('admin/items') }}/' + (confirmDelete.id || '')" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white">Hapus Item</button>
+                        <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white">Delete Item</button>
                     </form>
                 </div>
             </div>

@@ -14,7 +14,7 @@
                     </div>
                     <h3 class="text-lg font-bold text-white mb-2">Security Settings</h3>
                     <p class="text-sm text-app-muted leading-relaxed">
-                        Pastikan akun Anda aman. Gunakan password yang kuat dengan kombinasi huruf, angka, dan simbol untuk melindungi aset market Anda.
+                        Make sure your Account is secure. Use a strong password with combination of letters, numbers, and symbols to protect your Account.
                     </p>
                 </div>
             </div>
@@ -23,7 +23,7 @@
             <div class="md:w-2/3">
                 <div class="bg-app-card border border-app-border rounded-xl shadow-xl overflow-hidden">
                     <div class="px-6 py-4 border-b border-app-border flex justify-between items-center bg-app-bg/50">
-                        <h3 class="text-lg font-semibold text-white">Ganti Password</h3>
+                        <h3 class="text-lg font-semibold text-white">Change Password Form</h3>
                         <i class="fas fa-lock text-app-muted"></i>
                     </div>
 
@@ -34,7 +34,7 @@
 
                             <!-- Password Saat Ini -->
                             <div class="group">
-                                <label for="password-saat-ini" class="block text-sm font-medium text-app-muted mb-2">Password Saat Ini</label>
+                                <label for="password-saat-ini" class="block text-sm font-medium text-app-muted mb-2">Current Password</label>
                                 <div class="relative">
                                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <i class="fas fa-key text-app-muted group-focus-within:text-app-accent transition-colors"></i>
@@ -50,7 +50,7 @@
 
                             <!-- Password Baru -->
                             <div class="group" x-data="{ show: false }">
-                                <label for="password-baru" class="block text-sm font-medium text-app-muted mb-2">Password Baru</label>
+                                <label for="password-baru" class="block text-sm font-medium text-app-muted mb-2">New Password</label>
                                 <div class="relative">
                                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <i class="fas fa-lock text-app-muted group-focus-within:text-app-accent transition-colors"></i>
@@ -71,7 +71,7 @@
 
                             <!-- Konfirmasi Password -->
                             <div class="group" x-data="{ show: false }">
-                                <label for="konfirmasi-password" class="block text-sm font-medium text-app-muted mb-2">Konfirmasi Password</label>
+                                <label for="konfirmasi-password" class="block text-sm font-medium text-app-muted mb-2">Password Confirmation</label>
                                 <div class="relative">
                                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <i class="fas fa-check-circle text-app-muted group-focus-within:text-app-accent transition-colors"></i>
@@ -96,7 +96,7 @@
 
                         <div class="px-6 py-4 bg-app-bg/30 border-t border-app-border flex justify-end">
                             <button type="submit" class="bg-app-accent hover:bg-app-accent text-white font-medium py-2 px-6 rounded-lg shadow-lg shadow-app-accent/20 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-app-accent ring-offset-app-bg">
-                                <i class="fas fa-save mr-2"></i> Ubah Password
+                                <i class="fas fa-save mr-2"></i> Change
                             </button>
                         </div>
                     </form>

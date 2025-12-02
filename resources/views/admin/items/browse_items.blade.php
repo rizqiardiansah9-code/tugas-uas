@@ -9,7 +9,7 @@
             <div>
                 <a href="{{ route('admin.dashboard') }}" class="text-sm text-app-muted hover:underline">← Dashboard</a>
                 <h1 class="text-2xl font-bold text-white mt-2">Browse Items</h1>
-                <p class="text-app-muted text-sm">Daftar semua items / skins — gunakan filter kategori atau klik item untuk melihat detail.</p>
+                <p class="text-app-muted text-sm">List all items / skins — use the category filter or click on an item to view details.</p>
             </div>
 
             <div class="flex items-center gap-3">
@@ -123,22 +123,22 @@
         <div x-show="showDeleteModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center">
             <div class="absolute inset-0 bg-black/60" @click="showDeleteModal = false"></div>
             <div class="relative bg-app-card border border-app-border rounded-lg p-6 w-full max-w-md mx-4">
-                <h3 class="text-lg font-semibold text-white">Konfirmasi Hapus Item</h3>
-                <p class="text-app-muted mt-2">Anda akan menghapus item berikut:</p>
+                <h3 class="text-lg font-semibold text-white">Confirm To Delete Item</h3>
+                <p class="text-app-muted mt-2">You will delete the following items:</p>
                 <p class="font-semibold text-white mt-3" x-text="confirmDelete.name"></p>
-                <p class="text-sm text-app-muted mt-1">Tindakan ini tidak dapat dibatalkan. Gambar item akan dihapus juga.</p>
+                <p class="text-sm text-app-muted mt-1">This action cannot be undone. The item image will be deleted as well.</p>
 
                 <div class="mt-6 flex justify-end gap-3">
-                    <button type="button" @click="showDeleteModal = false" class="px-4 py-2 rounded bg-app-bg/60 text-app-muted">Batal</button>
+                    <button type="button" @click="showDeleteModal = false" class="px-4 py-2 rounded bg-app-bg/60 text-app-muted">Cancle</button>
 
-                    <form x-show="confirmDelete.id" x-bind:action="'{{ url('admin/items') }}/' + (confirmDelete.id || '')" method="POST">
+                    <form x-bind:action="'{{ url('admin/items') }}/' + (confirmDelete.id || '')" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white" :disabled="!confirmDelete.id">Hapus Item</button>
+                        <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white">Delete Item</button>
                     </form>
-                    <div x-show="!confirmDelete.id" class="mt-4 text-sm text-red-400">Tidak ada item yang dipilih.</div>
                 </div>
             </div>
+        </div>
         </div>
 
     </div>

@@ -58,11 +58,11 @@
                     <!-- Action Buttons moved here for Mobile/Desktop consistency -->
                     <div class="bg-app-card border border-app-border rounded-xl p-4 mt-6 shadow-lg">
                         <button type="button" class="w-full py-3 rounded-lg font-bold transition-all duration-300 bg-app-cardHover text-app-muted hover:text-white hover:bg-app-border border border-app-border shadow-md" id="toggleButton">
-                            <i class="fas fa-edit mr-2"></i> Klik untuk Ubah Profil
+                            <i class="fas fa-edit mr-2"></i> Click to Edit Profile
                         </button>
 
                         <button type="button" class="w-full py-2 mt-3 rounded-lg text-sm font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors hidden border border-transparent hover:border-red-500/30" id="batal">
-                            <i class="fas fa-times mr-1"></i> Batalkan Perubahan
+                            <i class="fas fa-times mr-1"></i> Cancel Edit
                         </button>
                     </div>
                 </div>
@@ -71,13 +71,13 @@
                 <div class="lg:w-2/3">
                     <div class="bg-app-card border border-app-border rounded-xl shadow-xl overflow-hidden">
                         <div class="px-6 py-4 border-b border-app-border bg-app-bg/50">
-                            <h3 class="text-lg font-semibold text-white">Detail Akun</h3>
+                            <h3 class="text-lg font-semibold text-white">Account Detail</h3>
                         </div>
 
                         <div class="p-6 space-y-6">
                             <!-- Nama -->
                             <div class="group">
-                                <label for="nama" class="block text-sm font-medium text-app-muted mb-2">Nama Lengkap</label>
+                                <label for="nama" class="block text-sm font-medium text-app-muted mb-2">Name</label>
                                 <div class="relative">
                                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <i class="fas fa-user text-app-muted"></i>
