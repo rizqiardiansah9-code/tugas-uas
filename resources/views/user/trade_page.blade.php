@@ -3,9 +3,16 @@
 @section('title','Trade — Teman')
 
 @section('content')
+@section('navbar')
+  @include('user.multi_page.trade_navbar')
+@endsection
+
+@section('hideFooter')
+@endsection
+
 <div class="min-h-screen text-white">
 
-<div class="relative overflow-hidden -mx-6 px-6 w-screen left-1/2 right-1/2 ml-[-50vw] mr-[-50vw]">
+<div class="relative overflow-hidden -mx-6" style="width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;">
 
 <!-- TOP BAR -->
 <div class="grid grid-cols-[1fr_260px_1fr] gap-4 px-6 py-6">
@@ -120,7 +127,10 @@
 
 </section>
 
-</div>
-</div>
+  </div>
+
+  {{-- Trade page specific footer --}}
+  @include('user.multi_page.trade_footer')
+
 </div>
 @endsection

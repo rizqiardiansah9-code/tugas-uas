@@ -110,13 +110,20 @@
 <body>
     <div class="absolute inset-0 bg-grid-pattern pointer-events-none" aria-hidden="true"></div>
 
-    @include('user.layout.navbar')
+    {{-- Allow pages to override navbar. If not provided, include default navbar --}}
+    @hasSection('navbar')
+        @yield('navbar')
+    @else
+        @include('user.layout.navbar')
+    @endif
 
     <main class="relative z-10 container-fluid pt-6 px-6" style="max-width:1200px;margin:0 auto">
         @yield('content')
     </main>
 
-    @include('user.layout.footer')
+    @unless(View::hasSection('hideFooter'))
+        @include('user.layout.footer')
+    @endunless
 
     {{-- Modals (login/register/item) --}}
     @includeIf('user.layout.partials.modals')
