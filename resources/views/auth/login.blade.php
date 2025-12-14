@@ -139,6 +139,8 @@
                 <!-- Form Input -->
                 <form class="space-y-6" method="POST" action="{{ route('login') }}">
                     @csrf
+                    <!-- Intent: specify this is the admin login page -->
+                    <input type="hidden" name="intent" value="admin">
 
                     <!-- Email -->
                     <div class="space-y-1">

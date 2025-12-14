@@ -17,6 +17,9 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
+        // Determine login intent: 'admin' or 'user' (default 'user')
+        $intent = $request->input('intent', 'user');
+
         // Find user by email
         $user = User::where('email', $credentials['email'])->first();
 
@@ -26,14 +29,24 @@ class AuthController extends Controller
                 return back()->with('error', 'Your account is not active.');
             }
 
-            // Coba login
+            // Enforce intent-based role restriction before authenticating
+            if ($intent === 'admin' && $user->role_id != 1) {
+                return back()->with('error', 'Unauthorized: only admin accounts can log in here.');
+            }
+
+            if ($intent === 'user' && $user->role_id == 1) {
+                return back()->with('error', 'Unauthorized: admin accounts cannot log in from user pages.');
+            }
+
+            // Attempt login
             if (Auth::attempt($credentials)) {
                 $request->session()->regenerate();
                 // Redirect berdasarkan role: role_id 1 = admin, role_id 2 = user
                 if ($user->role_id == 1) {
                     return redirect()->intended('admin/dashboard');
                 } else {
-                    return redirect()->intended('/user');
+                    // redirect regular users to the new Trade page after login
+                    return redirect()->intended('/user/trade');
                 }
             }
         }

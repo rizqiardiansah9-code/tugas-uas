@@ -21,6 +21,12 @@ Route::middleware('guest')->group(function () {
 // User catalog routes - public (tidak butuh login)
 Route::prefix('user')->name('user.')->group(function () {
     Route::get('/catalog', [CatalogController::class, 'index'])->name('index');
+    // Public pages
+    // Protected user-only pages
+    Route::middleware(['auth', 'isUser'])->group(function(){
+        // Trade page (frontend-only static layout)
+        Route::get('/trade', function(){ return view('user.trade_page'); })->name('trade');
+    });
 });
 
 Route::middleware('auth')->group(function () {
