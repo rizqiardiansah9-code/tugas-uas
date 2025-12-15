@@ -4,6 +4,122 @@
 
 @section('content')
     <div x-data="{ selectedCategory: 'all' }" x-cloak class="w-full">
+<style>
+:root{
+  --bg:#0e1015;
+  --card:#1a1d2b;
+  --card-hover:#21253a;
+  --primary:#3f46ff;
+}
+
+.items-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(175px, 1fr));
+  gap:16px;
+}
+
+.item-card{
+  position:relative;
+  background:var(--card);
+  border-radius:16px;
+  padding:12px;
+  height:206px;
+  overflow:hidden;
+}
+
+/* IMAGE */
+.thumb{
+  width:100%;
+  height:190px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.thumb img{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+  transition:.35s cubic-bezier(.2,.8,.2,1);
+}
+
+.item-card:hover img{
+  transform:scale(1.05) translateY(-6px);
+}
+
+/* TEXT AREA (BOTTOM) */
+.info{
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:12px;
+  transition:.35s cubic-bezier(.2,.8,.2,1);
+}
+
+.name{
+  font-size:14px;
+  color:#cfd6ff;
+}
+
+.price{
+  margin-top:4px;
+  font-size:16px;
+  font-weight:600;
+}
+
+/* ACTIONS */
+.actions{
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:12px;
+  display:flex;
+  opacity:0;
+  transform:translateY(20px);
+  transition:.35s cubic-bezier(.2,.8,.2,1);
+}
+
+.item-card:hover .actions{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.item-card:hover .info{
+  transform:translateY(-46px);
+}
+
+.btn{
+  font-size:13px;
+  font-weight:600;
+  padding:9px 10px;
+  border:none;
+  cursor:pointer;
+}
+
+.btn.cart{
+  flex:1;
+  background:var(--primary);
+  color:#fff;
+  border-radius:6px 0 0 6px;
+}
+
+.btn.detail{
+  width:40px;
+  background:#4a50ff;
+  color:#fff;
+  border-radius:0 6px 6px 0;
+}
+
+@media (hover:none){
+  .actions{
+    opacity:1;
+    transform:none;
+  }
+  .info{
+    transform:translateY(-46px);
+  }
+}
+</style>
         <!-- Hero Section - TradeIt Style - Full Width -->
         <div class="relative overflow-hidden mb-0 -mx-6 px-6 w-screen left-1/2 right-1/2 ml-[-50vw] mr-[-50vw]">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[600px] py-12 lg:py-20">
@@ -31,14 +147,7 @@
 
                     <!-- CTA Button -->
                     <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-                        <a href="{{ Auth::check() ? '#catalogGrid' : 'javascript:openModal(\"registerModalOverlay\")' }}"
-                            class="px-8 py-4 font-black text-white rounded-lg transition-all duration-300 whitespace-nowrap"
-                            style="background-color: #f97316; box-shadow: 0 0 20px rgba(249, 115, 22, 0.3);"
-                            onmouseover="this.style.boxShadow='0 0 30px rgba(249, 115, 22, 0.6)'; this.style.transform='translateY(-2px)'"
-                            onmouseout="this.style.boxShadow='0 0 20px rgba(249, 115, 22, 0.3)'; this.style.transform='translateY(0)'"
-                            style="display:inline-block; transition:all 0.3s;">
-                            {{ Auth::check() ? 'Browse Now' : 'Sign Up' }}
-                        </a>
+                        <button id="openLogin" class="navbar-btn px-5 py-2.5 text-base">Sign In</button>
                         <span class="text-white text-sm app-text-muted">
                             <i class="fas fa-gift mr-2 text-orange-500"></i>Start now for a bonus
                         </span>
@@ -174,74 +283,29 @@
 
             <!-- Products Grid -->
             <div class="mb-8">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20" id="catalogGrid">
+                <div class="flex-1 grid grid-cols-3 gap-3 p-4 overflow-auto" id="catalogGrid">
                     @isset($items)
-                        @forelse($items as $item)
-                            <div class="p-4">
-                                <div class="product-card group app-card border border-app-border rounded-xl overflow-hidden transition-all duration-300 hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/10 cursor-pointer"
-                                    data-item-title="{{ $item->name }}"
-                                    data-item-desc="{{ Str::limit($item->description ?? '', 500) }}"
-                                    data-item-price="{{ $item->price ?? '-' }}"
-                                    data-item-image="{{ !empty($item->image) ? asset('storage/' . $item->image) : 'https://via.placeholder.com/300x200?text=No+Image' }}"
-                                    data-category="{{ $item->category->name ?? 'Umum' }}" onclick="showItemModal(this)">
-
-                                    <!-- Image Container -->
-                                    <div class="relative h-48 overflow-hidden bg-app-bg">
-                                        @if (!empty($item->image))
-                                            <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}"
-                                                class="w-full h-full object-cover transition-transform duration-300">
-                                        @else
-                                            <img src="https://via.placeholder.com/300x200?text=No+Image"
-                                                alt="{{ $item->name }}"
-                                                class="w-full h-full object-cover transition-transform duration-300">
-                                        @endif
-                                        <div
-                                            class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                        </div>
-                                    </div>
-
-                                    <!-- Content -->
-                                    <div class="p-5">
-                                        <div class="flex items-start justify-between gap-3 mb-3">
-                                            <div class="flex-1">
-                                                <h3
-                                                    class="font-bold text-white text-lg leading-tight group-hover:text-orange-500 transition-colors">
-                                                    {{ $item->name }}</h3>
-                                            </div>
-                                        </div>
-
-                                        @php
-                                            $catGradients = [
-                                                'Guns' =>
-                                                    'bg-gradient-to-r from-app-accent via-app-accent/60 to-app-accent/30 text-white',
-                                                'Knives' =>
-                                                    'bg-gradient-to-r from-gray-800 via-gray-600 to-gray-400 text-white',
-                                                'Gloves' =>
-                                                    'bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-200 text-black',
-                                                'Stickers' =>
-                                                    'bg-gradient-to-r from-pink-600 via-pink-400 to-pink-200 text-white',
-                                            ];
-                                        @endphp
-
-                                        <div class="flex items-center justify-between mb-4">
-                                            <span
-                                                class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium {{ $catGradients[$item->category->name] ?? 'bg-app-bg border border-app-border text-white' }}">
-                                                {{ $item->category->name ?? 'General' }}
-                                            </span>
-                                        </div>
-
-                                        <div class="flex items-center justify-between pt-4 border-t border-app-border">
-                                            <div>
-                                                <p class="text-xs app-text-muted mb-1">Price</p>
-                                                <p class="text-2xl font-bold text-orange-500">
-                                                    ${{ number_format($item->price, 2) }}</p>
-                                            </div>
-                                            <button
-                                                class="p-3 rounded-lg bg-app-accent/20 border border-app-accent/30 text-orange-500 hover:bg-app-accent/30 group-hover:border-orange-500 transition-all">
-                                                <i class="fas fa-arrow-right text-lg"></i>
-                                            </button>
-                                        </div>
-                                    </div>
+                        @forelse($items->take(6) as $item)
+                            <div class="item-card"
+                                data-item-title="{{ $item->name }}"
+                                data-item-desc="{{ Str::limit($item->description ?? '', 500) }}"
+                                data-item-price="{{ $item->price ?? '-' }}"
+                                data-item-image="{{ !empty($item->image) ? asset('storage/' . $item->image) : 'https://via.placeholder.com/300x200?text=No+Image' }}"
+                                data-category="{{ $item->category->name ?? 'Umum' }}" onclick="showItemModal(this)">
+                                <div class="thumb">
+                                    @if (!empty($item->image))
+                                        <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}">
+                                    @else
+                                        <img src="https://via.placeholder.com/300x200?text=No+Image" alt="{{ $item->name }}">
+                                    @endif
+                                </div>
+                                <div class="info">
+                                    <div class="name">{{ $item->name }}</div>
+                                    <div class="price">${{ number_format($item->price, 2) }}</div>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn cart"><i class="fas fa-shopping-cart"></i></button>
+                                    <button class="btn detail">:</button>
                                 </div>
                             </div>
                         @empty
@@ -302,52 +366,20 @@
                             ];
                         @endphp
                         @foreach ($samples as $s)
-                            <div class="p-4">
-                                <div class="product-card group app-card border border-app-border rounded-xl overflow-hidden transition-all duration-300 hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/10 cursor-pointer"
-                                    data-item-title="{{ $s['name'] }}" data-item-desc="{{ $s['desc'] }}"
-                                    data-item-price="{{ $s['price'] }}" data-item-image="{{ $s['img'] }}"
-                                    data-category="{{ $s['category'] }}" onclick="showItemModal(this)">
-
-                                    <!-- Image Container -->
-                                    <div class="relative h-48 overflow-hidden bg-app-bg">
-                                        <img src="{{ $s['img'] }}" alt="{{ $s['name'] }}"
-                                            class="w-full h-full object-cover transition-transform duration-300">
-                                        <div
-                                            class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                        </div>
-                                    </div>
-
-                                    <!-- Content -->
-                                    <div class="p-5">
-                                        <div class="flex items-start justify-between gap-3 mb-3">
-                                            <div class="flex-1">
-                                                <h3
-                                                    class="font-bold text-white text-lg leading-tight group-hover:text-orange-500 transition-colors">
-                                                    {{ $s['name'] }}</h3>
-                                            </div>
-                                        </div>
-
-                                        <p class="text-sm app-text-muted mb-4 line-clamp-2">{{ $s['desc'] }}</p>
-
-                                        <div class="flex items-center justify-between mb-4">
-                                            <span
-                                                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-app-bg border border-app-border text-xs font-medium text-white">
-                                                <i class="fas fa-folder text-orange-500"></i>{{ $s['category'] }}
-                                            </span>
-                                        </div>
-
-                                        <div class="flex items-center justify-between pt-4 border-t border-app-border">
-                                            <div>
-                                                <p class="text-xs app-text-muted mb-1">Price</p>
-                                                <p class="text-2xl font-bold text-orange-500">
-                                                    ${{ number_format($s['price'], 2) }}</p>
-                                            </div>
-                                            <button
-                                                class="p-3 rounded-lg bg-app-accent/20 border border-app-accent/30 text-orange-500 hover:bg-app-accent/30 group-hover:border-orange-500 transition-all">
-                                                <i class="fas fa-arrow-right text-lg"></i>
-                                            </button>
-                                        </div>
-                                    </div>
+                            <div class="item-card"
+                                data-item-title="{{ $s['name'] }}" data-item-desc="{{ $s['desc'] }}"
+                                data-item-price="{{ $s['price'] }}" data-item-image="{{ $s['img'] }}"
+                                data-category="{{ $s['category'] }}" onclick="showItemModal(this)">
+                                <div class="thumb">
+                                    <img src="{{ $s['img'] }}" alt="{{ $s['name'] }}">
+                                </div>
+                                <div class="info">
+                                    <div class="name">{{ $s['name'] }}</div>
+                                    <div class="price">${{ number_format($s['price'], 2) }}</div>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn cart"><i class="fas fa-shopping-cart"></i></button>
+                                    <button class="btn detail">:</button>
                                 </div>
                             </div>
                         @endforeach

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\User\CatalogController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ItemController;
+use App\Http\Controllers\User\TradeController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,8 +25,8 @@ Route::prefix('user')->name('user.')->group(function () {
     // Public pages
     // Protected user-only pages
     Route::middleware(['auth', 'isUser'])->group(function(){
-        // Trade page (frontend-only static layout)
-        Route::get('/trade', function(){ return view('user.trade_page'); })->name('trade');
+        // Trade page
+        Route::get('/trade', [TradeController::class, 'index'])->name('trade');
     });
 });
 
