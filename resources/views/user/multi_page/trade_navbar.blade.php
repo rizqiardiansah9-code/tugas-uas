@@ -1,4 +1,4 @@
-<nav class="backdrop-blur-md h-20 flex items-center justify-between px-6 lg:px-8 bg-app-bg/80">
+<nav class="relative z-[100] backdrop-blur-md h-20 flex items-center justify-between px-6 lg:px-8 bg-app-bg/80">
     <!-- Left: Logo + small links -->
     <div class="flex items-center gap-4">
         <a href="/" class="flex items-center gap-3">
@@ -29,17 +29,28 @@
                     <i class="fas fa-chevron-down text-xs text-app-muted"></i>
                 </button>
 
-                <div x-show="open" x-transition class="absolute right-0 mt-3 w-56 bg-app-card border border-app-border rounded-xl shadow-2xl py-2 z-50" style="display:none;">
-                    <a href="#" class="flex items-center px-4 py-2.5 text-sm text-app-muted hover:bg-app-cardHover hover:text-white transition-colors">
+                <div x-show="open" 
+                    x-transition:enter="transition ease-out duration-100"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    class="absolute right-0 mt-3 w-56 bg-[#151823] border border-white/5 rounded-xl shadow-2xl py-2 z-[100]" 
+                    style="display:none;">
+
+                    <div class="px-4 py-2 border-b border-white/5 mb-2 md:hidden">
+                        <p class="text-white font-bold">{{ Auth::user()->nama ?? Auth::user()->name }}</p>
+                        <p class="text-xs text-[#22c55e] font-mono">$ 0.00</p>
+                    </div>
+
+                    <a href="{{ route('user.profil') }}" class="flex items-center px-4 py-2.5 text-sm text-gray-400 hover:bg-[#1c202e] hover:text-white transition-colors">
                         <i class="fas fa-user w-6 text-center mr-2"></i> My Profile
                     </a>
-                    <a href="#" class="flex items-center px-4 py-2.5 text-sm text-app-muted hover:bg-app-cardHover hover:text-white transition-colors">
+                    <a href="#" class="flex items-center px-4 py-2.5 text-sm text-gray-400 hover:bg-[#1c202e] hover:text-white transition-colors">
                         <i class="fas fa-lock w-6 text-center mr-2"></i> Change Password
                     </a>
 
-                    <div class="h-px bg-app-border my-2 mx-4"></div>
+                    <div class="h-px bg-white/5 my-2 mx-4"></div>
 
-                    <a href="{{ route('logout') }}" class="flex items-center px-4 py-2.5 text-sm text-app-danger hover:bg-red-500/10 transition-colors">
+                    <a href="{{ route('logout') }}" class="flex items-center px-4 py-2.5 text-sm text-red-400 hover:bg-red-500/10 transition-colors">
                         <i class="fas fa-sign-out-alt w-6 text-center mr-2"></i> Logout
                     </a>
                 </div>

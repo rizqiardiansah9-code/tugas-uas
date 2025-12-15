@@ -25,12 +25,12 @@ class DashboardController extends Controller
 
         // Ambil data items dari DB jika model tersedia
         try {
-            $totalItems = Item::count();
+            $totalItems = Item::where('is_official', true)->count();
             // configurable window (minutes) — defaults to 8 minutes if not set in config/env
             $window = (int) config('admin.new_items_window_minutes', 8);
             // count items created within the configured window using Item model helper
             $newItems = Item::countNewWithinMinutes($window);
-            $items = Item::orderBy('created_at', 'desc')->take(12)->get();
+            $items = Item::where('is_official', true)->orderBy('created_at', 'desc')->take(12)->get();
         } catch (\Throwable $e) {
             // Jika belum ada table/items, gunakan fallback
             $totalItems = 0;

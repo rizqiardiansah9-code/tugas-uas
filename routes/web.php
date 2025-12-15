@@ -27,6 +27,13 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::middleware(['auth', 'isUser'])->group(function(){
         // Trade page
         Route::get('/trade', [TradeController::class, 'index'])->name('trade');
+        Route::get('/trade/refresh', [TradeController::class, 'refresh'])->name('trade.refresh');
+        Route::post('/trade', [TradeController::class, 'process'])->name('trade.process');
+        
+        // Profile
+        Route::get('/profil', [App\Http\Controllers\User\UserProfileController::class, 'show'])->name('profil');
+        Route::put('/profil', [App\Http\Controllers\User\UserProfileController::class, 'update'])->name('profil.update');
+        Route::post('/profil/inventory', [App\Http\Controllers\User\UserProfileController::class, 'storeInventory'])->name('profil.inventory.store');
     });
 });
 

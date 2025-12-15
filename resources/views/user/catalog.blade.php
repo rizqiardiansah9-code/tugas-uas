@@ -6,122 +6,185 @@
     <div x-data="{ selectedCategory: 'all' }" x-cloak class="w-full">
 <style>
 :root{
-  --bg:#0e1015;
-  --card:#1a1d2b;
-  --card-hover:#21253a;
-  --primary:#3f46ff;
+  --bg:#0e1015; --card:#151823; --card-inner:#1c202e;
+  --primary:#4c6fff; --gray:#aab0d5;
 }
 
-.items-grid{
+/* GRID */
+.catalog-grid {
   display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(175px, 1fr));
-  gap:16px;
+  grid-template-columns:repeat(auto-fill,minmax(175px,1fr));
+  gap:12px;
+  /* padding:16px; removed padding to fit layout */
 }
 
-.item-card{
-  position:relative;
-  background:var(--card);
-  border-radius:16px;
-  padding:12px;
+/* CARD SIZE */
+.catalog-col{
+  /* width:175px; removed fixed width to allow fluid grid */
   height:206px;
+}
+
+/* CARD */
+.item-cell{
+  width:100%;
+  height:100%;
+  background:var(--card);
+  border-radius:10px;
   overflow:hidden;
 }
 
-/* IMAGE */
-.thumb{
-  width:100%;
-  height:190px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.thumb img{
-  max-width:100%;
-  max-height:100%;
-  object-fit:contain;
-  transition:.35s cubic-bezier(.2,.8,.2,1);
-}
-
-.item-card:hover img{
-  transform:scale(1.05) translateY(-6px);
-}
-
-/* TEXT AREA (BOTTOM) */
-.info{
-  position:absolute;
-  left:12px;
-  right:12px;
-  bottom:12px;
-  transition:.35s cubic-bezier(.2,.8,.2,1);
-}
-
-.name{
-  font-size:14px;
-  color:#cfd6ff;
-}
-
-.price{
-  margin-top:4px;
-  font-size:16px;
-  font-weight:600;
-}
-
-/* ACTIONS */
-.actions{
-  position:absolute;
-  left:12px;
-  right:12px;
-  bottom:12px;
-  display:flex;
-  opacity:0;
-  transform:translateY(20px);
-  transition:.35s cubic-bezier(.2,.8,.2,1);
-}
-
-.item-card:hover .actions{
-  opacity:1;
-  transform:translateY(0);
-}
-
-.item-card:hover .info{
-  transform:translateY(-46px);
-}
-
-.btn{
-  font-size:13px;
-  font-weight:600;
-  padding:9px 10px;
-  border:none;
+.item-details{
+  position:relative;
+  height:100%;
+  padding:12px;
+  background:var(--card-inner);
+  overflow:hidden;
   cursor:pointer;
 }
 
-.btn.cart{
+/* COUNT */
+.count{
+  position:absolute;
+  top:10px;
+  right:10px;
+  font-size:13px;
+  color:#7fa2ff;
+  z-index:3;
+}
+
+/* IMAGE */
+.item-image{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  padding: 20px;
+  transition:.35s cubic-bezier(.2,.8,.2,1);
+}
+
+/* TEXT */
+.indicators{
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:12px;
+  transition:.35s cubic-bezier(.2,.8,.2,1);
+}
+
+.item-name{
+  font-size:13px;
+  font-weight:600;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  color: #7d859e;
+}
+
+.price{
+  font-size:15px;
+  font-weight:700;
+  margin-top:2px;
+  color: #22c55e;
+}
+
+/* BUTTONS */
+.buttons{
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:12px;
+  opacity:0;
+  transform:translateY(100%);
+  transition:.35s cubic-bezier(.2,.8,.2,1);
+}
+
+.btn-wrap{
+  display:flex;
+  height:30px;
+  border-radius:8px;
+  overflow:hidden;
+}
+
+.btn-unstack{
   flex:1;
   background:var(--primary);
+  border:0;
   color:#fff;
-  border-radius:6px 0 0 6px;
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: all 0.2s ease;
 }
 
-.btn.detail{
-  width:40px;
-  background:#4a50ff;
-  color:#fff;
-  border-radius:0 6px 6px 0;
+.btn-unstack:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 4px 12px rgba(76, 111, 255, 0.4);
 }
 
-@media (hover:none){
-  .actions{
-    opacity:1;
-    transform:none;
-  }
-  .info{
-    transform:translateY(-46px);
-  }
+.btn-unstack:active {
+  box-shadow: none;
+}
+
+.btn-more{
+  width:30px;
+  background:#5b6dff;
+  border:0;
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-more:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 4px 12px rgba(91, 109, 255, 0.4);
+}
+
+.btn-more:active {
+  box-shadow: none;
+}
+
+/* HOVER */
+.item-details:hover .item-image{
+  transform:translateY(-8px) scale(.92);
+}
+
+.item-details:hover .indicators{
+  transform:translateY(-36px);
+}
+
+.item-details:hover .buttons{
+  opacity:1;
+  transform:translateY(0);
+}
+/* HIDE SCROLLBAR */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+/* MARQUEE ANIMATION */
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+    width: max-content; /* Force width to fit content for scrolling */
+    animation: marquee 40s linear infinite;
+}
+.animate-marquee:hover {
+    animation-play-state: paused;
 }
 </style>
         <!-- Hero Section - TradeIt Style - Full Width -->
         <div class="relative overflow-hidden mb-0 -mx-6 px-6 w-screen left-1/2 right-1/2 ml-[-50vw] mr-[-50vw]">
+            <!-- ... (hero content skipped) ... -->
+
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[600px] py-12 lg:py-20">
                 <!-- Left Content -->
                 <div class="relative z-10 pt-8 lg:pt-0 px-6 lg:px-12">
@@ -248,229 +311,255 @@
 
         <!-- Content Container - Back to normal width -->
         <div class="px-6">
-            <!-- Category Buttons (no icons) -->
-            <div class="mb-8 mt-20 flex justify-center">
-                <div class="flex gap-3 min-w-min justify-center">
-                    <button
-                        class="category-filter px-6 py-2.5 rounded-lg font-medium text-white bg-app-accent/20 border border-app-accent/50 hover:bg-app-accent/30 transition-all whitespace-nowrap active"
+            <!-- Category Buttons (Modern Style) -->
+            <div class="mb-8 mt-12 flex justify-center">
+                <div class="inline-flex flex-wrap justify-center gap-3 p-1.5 bg-black/20 backdrop-blur-sm rounded-2xl border border-white/5">
+                    <button class="category-filter relative px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 overflow-hidden group active"
                         data-category="all">
-                        All
+                        <span class="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-500 opacity-0 group-[.active]:opacity-100 transition-opacity duration-300"></span>
+                        <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <span class="relative z-10 group-[.active]:text-white text-gray-400 group-hover:text-white">All Items</span>
                     </button>
-                    <button
-                        class="category-filter px-6 py-2.5 rounded-lg font-medium text-app-text-muted border border-app-border hover:border-app-accent/50 hover:text-white transition-all whitespace-nowrap"
-                        data-category="Guns">
-                        Guns
+
+                    @foreach(['Guns', 'Gloves', 'Knifes', 'Stickers'] as $cat)
+                    <button class="category-filter relative px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 overflow-hidden group"
+                        data-category="{{ $cat }}">
+                        <span class="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-500 opacity-0 group-[.active]:opacity-100 transition-opacity duration-300"></span>
+                        <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <span class="relative z-10 group-[.active]:text-white text-gray-400 group-hover:text-white">{{ $cat }}</span>
                     </button>
-                    <button
-                        class="category-filter px-6 py-2.5 rounded-lg font-medium text-app-text-muted border border-app-border hover:border-app-accent/50 hover:text-white transition-all whitespace-nowrap"
-                        data-category="Gloves">
-                        Gloves
-                    </button>
-                    <button
-                        class="category-filter px-6 py-2.5 rounded-lg font-medium text-app-text-muted border border-app-border hover:border-app-accent/50 hover:text-white transition-all whitespace-nowrap"
-                        data-category="Knifes">
-                        Knifes
-                    </button>
-                    <button
-                        class="category-filter px-6 py-2.5 rounded-lg font-medium text-app-text-muted border border-app-border hover:border-app-accent/50 hover:text-white transition-all whitespace-nowrap"
-                        data-category="Stickers">
-                        Stickers
-                    </button>
+                    @endforeach
                 </div>
             </div>
 
             <!-- Removed dynamic category tabs -->
 
-            <!-- Products Grid -->
-            <div class="mb-8">
-                <div class="flex-1 grid grid-cols-3 gap-3 p-4 overflow-auto" id="catalogGrid">
-                    @isset($items)
-                        @forelse($items->take(6) as $item)
-                            <div class="item-card"
-                                data-item-title="{{ $item->name }}"
-                                data-item-desc="{{ Str::limit($item->description ?? '', 500) }}"
-                                data-item-price="{{ $item->price ?? '-' }}"
-                                data-item-image="{{ !empty($item->image) ? asset('storage/' . $item->image) : 'https://via.placeholder.com/300x200?text=No+Image' }}"
-                                data-category="{{ $item->category->name ?? 'Umum' }}" onclick="showItemModal(this)">
-                                <div class="thumb">
-                                    @if (!empty($item->image))
-                                        <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}">
-                                    @else
-                                        <img src="https://via.placeholder.com/300x200?text=No+Image" alt="{{ $item->name }}">
-                                    @endif
+            <!-- Products Grid (Infinite Marquee) -->
+            <div class="relative group overflow-hidden">
+                <!-- Wrapper for marquee to strictly hide overflow -->
+                <div class="w-full overflow-hidden relative">
+                     <!-- Gradient Overlays for smooth entry/exit -->
+                    <div class="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#0e1015] to-transparent z-20 pointer-events-none"></div>
+                    <div class="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#0e1015] to-transparent z-20 pointer-events-none"></div>
+                    
+                    <!-- Track -->
+                    <div id="marqueeTrack" class="flex gap-6 animate-marquee py-8 px-4">
+                        <!-- Content will be duplicated by JS for seamless loop -->
+                        @isset($items)
+                            @forelse($items as $item)
+                                <div class="catalog-col flex-shrink-0" style="flex: 0 0 220px; width: 220px; height: 320px;" data-category="{{ $item->category->name ?? 'Umum' }}">
+                                    <div class="item-cell">
+                                        <div class="item-details"
+                                            data-item-title="{{ $item->name }}"
+                                            data-item-desc="{{ Str::limit($item->description ?? '', 500) }}"
+                                            data-item-price="{{ $item->price ?? '-' }}"
+                                            data-item-image="{{ !empty($item->image) ? asset('storage/' . $item->image) : 'https://via.placeholder.com/300x200?text=No+Image' }}"
+                                            data-category="{{ $item->category->name ?? 'Umum' }}" onclick="showItemModal(this)">
+
+                                            @if (!empty($item->image))
+                                                <img class="item-image" src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}">
+                                            @else
+                                                <img class="item-image" src="https://via.placeholder.com/300x200?text=No+Image" alt="{{ $item->name }}">
+                                            @endif
+                                            
+                                            <div class="indicators">
+                                                <div class="item-name">{{ $item->name }}</div>
+                                                <div class="price">${{ number_format($item->price, 2) }}</div>
+                                            </div>
+                                            
+                                            <div class="buttons">
+                                                <div class="btn-wrap">
+                                                <button class="btn-unstack" onclick="@auth window.location.href='{{ route('user.trade') }}' @else openModal('loginModalOverlay') @endauth"><i class="fas fa-shopping-cart"></i> Cart</button>
+                                                    <button class="btn-more">⋮</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="info">
-                                    <div class="name">{{ $item->name }}</div>
-                                    <div class="price">${{ number_format($item->price, 2) }}</div>
+                            @empty
+                                <div class="w-full text-center py-16 flex-shrink-0" style="width: 100vw;">
+                                    <i class="fas fa-inbox text-4xl app-text-muted mb-4 block"></i>
+                                    <p class="text-xl app-text-muted">No items found.</p>
                                 </div>
-                                <div class="actions">
-                                    <button class="btn cart"><i class="fas fa-shopping-cart"></i></button>
-                                    <button class="btn detail">:</button>
-                                </div>
-                            </div>
-                        @empty
-                            <div class="col-span-full text-center py-16">
-                                <i class="fas fa-inbox text-4xl app-text-muted mb-4 block"></i>
-                                <p class="text-xl app-text-muted">No items found.</p>
-                            </div>
-                        @endforelse
-                    @else
-                        @php
+                            @endforelse
+                        @else
+                            <!-- Sample Loop kept for fallback/dev -->
+                            @php
                             $samples = [
-                                [
-                                    'name' => 'Premium Leather Jacket',
-                                    'desc' =>
-                                        'High-quality leather jacket perfect for everyday wear. Durable and stylish.',
-                                    'price' => 450000,
-                                    'category' => 'Clothing',
-                                    'img' => 'https://via.placeholder.com/300x200?text=Jacket',
-                                ],
-                                [
-                                    'name' => 'Classic Backpack',
-                                    'desc' =>
-                                        'Spacious and comfortable backpack for work or travel. Multiple compartments.',
-                                    'price' => 280000,
-                                    'category' => 'Accessories',
-                                    'img' => 'https://via.placeholder.com/300x200?text=Backpack',
-                                ],
-                                [
-                                    'name' => 'Running Shoes',
-                                    'desc' =>
-                                        'Comfortable running shoes with premium cushioning. Perfect for gym and jogging.',
-                                    'price' => 650000,
-                                    'category' => 'Footwear',
-                                    'img' => 'https://via.placeholder.com/300x200?text=Shoes',
-                                ],
-                                [
-                                    'name' => 'Cotton T-Shirt',
-                                    'desc' => 'Premium cotton t-shirt in various colors. Soft and breathable fabric.',
-                                    'price' => 120000,
-                                    'category' => 'Clothing',
-                                    'img' => 'https://via.placeholder.com/300x200?text=TShirt',
-                                ],
-                                [
-                                    'name' => 'Denim Jeans',
-                                    'desc' => 'Classic denim jeans with perfect fit. Durable and stylish design.',
-                                    'price' => 350000,
-                                    'category' => 'Clothing',
-                                    'img' => 'https://via.placeholder.com/300x200?text=Jeans',
-                                ],
-                                [
-                                    'name' => 'Sports Watch',
-                                    'desc' =>
-                                        'Smart watch with fitness tracking. Water-resistant and long battery life.',
-                                    'price' => 900000,
-                                    'category' => 'Accessories',
-                                    'img' => 'https://via.placeholder.com/300x200?text=Watch',
-                                ],
+                                ['name' => 'Premium Leather Jacket', 'price' => 450000, 'category' => 'Clothing', 'img' => 'https://via.placeholder.com/300x200?text=Jacket'],
+                                ['name' => 'Classic Backpack', 'price' => 280000, 'category' => 'Accessories', 'img' => 'https://via.placeholder.com/300x200?text=Backpack'],
+                                ['name' => 'Running Shoes', 'price' => 650000, 'category' => 'Footwear', 'img' => 'https://via.placeholder.com/300x200?text=Shoes'],
+                                ['name' => 'Cotton T-Shirt', 'price' => 120000, 'category' => 'Clothing', 'img' => 'https://via.placeholder.com/300x200?text=TShirt'],
+                                ['name' => 'Denim Jeans', 'price' => 350000, 'category' => 'Clothing', 'img' => 'https://via.placeholder.com/300x200?text=Jeans'],
+                                ['name' => 'Sports Watch', 'price' => 900000, 'category' => 'Accessories', 'img' => 'https://via.placeholder.com/300x200?text=Watch'],
                             ];
-                        @endphp
-                        @foreach ($samples as $s)
-                            <div class="item-card"
-                                data-item-title="{{ $s['name'] }}" data-item-desc="{{ $s['desc'] }}"
-                                data-item-price="{{ $s['price'] }}" data-item-image="{{ $s['img'] }}"
-                                data-category="{{ $s['category'] }}" onclick="showItemModal(this)">
-                                <div class="thumb">
-                                    <img src="{{ $s['img'] }}" alt="{{ $s['name'] }}">
+                            @endphp
+                            @foreach ($samples as $s)
+                                <div class="catalog-col flex-shrink-0" style="flex: 0 0 220px; width: 220px; height: 320px;" data-category="{{ $s['category'] }}">
+                                    <div class="item-cell">
+                                        <div class="item-details" data-item-title="{{ $s['name'] }}" data-item-price="{{ $s['price'] }}" data-item-image="{{ $s['img'] }}" data-category="{{ $s['category'] }}" onclick="showItemModal(this)">
+                                            <div class="count">x{{ rand(1, 50) }}</div>
+                                            <img class="item-image" src="{{ $s['img'] }}" alt="{{ $s['name'] }}">
+                                            <div class="indicators">
+                                                <div class="item-name">{{ $s['name'] }}</div>
+                                                <div class="price">${{ number_format($s['price'], 2) }}</div>
+                                            </div>
+                                            <div class="buttons">
+                                                <div class="btn-wrap">
+                                                    <button class="btn-unstack" onclick="@auth window.location.href='{{ route('user.trade') }}' @else openModal('loginModalOverlay') @endauth"><i class="fas fa-shopping-cart"></i> Cart</button>
+                                                    <button class="btn-more">⋮</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="info">
-                                    <div class="name">{{ $s['name'] }}</div>
-                                    <div class="price">${{ number_format($s['price'], 2) }}</div>
-                                </div>
-                                <div class="actions">
-                                    <button class="btn cart"><i class="fas fa-shopping-cart"></i></button>
-                                    <button class="btn detail">:</button>
-                                </div>
-                            </div>
-                        @endforeach
-                    @endisset
+                            @endforeach
+                        @endisset
+                    </div>
                 </div>
             </div>
         </div>
 
         <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const track = document.getElementById('marqueeTrack');
+                
+                // Initial Clone Logic
+                if(track) {
+                    const children = Array.from(track.children); // Get original items
+                    if(children.length > 0) {
+                        // Clone once to ensure we have enough content for the loop setup
+                        // We mark clones so we can control them or identify them if needed
+                        children.forEach(child => {
+                            const clone = child.cloneNode(true);
+                            clone.classList.add('is-clone');
+                            track.appendChild(clone);
+                        });
+                    }
+                    
+                    // Initial check
+                    checkAnimationState('all');
+                }
+            });
+
             // Category filter
             document.querySelectorAll('.category-filter').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const category = this.dataset.category;
+                    
+                    // Update Active State
+                    document.querySelectorAll('.category-filter').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    this.classList.add('active');
 
-                    // Update active state
-                    document.querySelectorAll('.category-filter').forEach(b => b.classList.remove('active',
-                        'bg-app-accent/20', 'border-app-accent/50'));
-                    document.querySelectorAll('.category-filter').forEach(b => b.classList.add(
-                        'text-app-text-muted', 'border-app-border'));
-                    this.classList.add('active', 'bg-app-accent/20', 'border-app-accent/50');
-                    this.classList.remove('text-app-text-muted', 'border-app-border');
-                    this.classList.add('text-white');
-
-                    // Filter products by category only
-                    filterProducts(category);
+                    // Filter and Update Animation
+                    checkAnimationState(category);
                 });
             });
 
-            function filterProducts(category) {
-                const cards = document.querySelectorAll('#catalogGrid .product-card');
+            function checkAnimationState(category) {
+                const track = document.getElementById('marqueeTrack');
+                if(!track) return;
+
+                const cards = track.querySelectorAll('.catalog-col');
                 let visibleCount = 0;
+                let visibleOriginals = 0;
 
+                // 1. First Pass: Show/Hide items based on category
                 cards.forEach(card => {
-                    const cardCategory = card.dataset.category.toLowerCase();
-                    const categoryMatch = category === 'all' || cardCategory === category.toLowerCase();
-
-                    if (categoryMatch) {
-                        card.style.display = '';
+                    const cardCategory = card.dataset.category; 
+                    if(!cardCategory) return;
+                    
+                    const match = (category === 'all' || cardCategory.toLowerCase() === category.toLowerCase());
+                    
+                    if(match) {
+                        card.style.display = 'block';
                         visibleCount++;
+                        if(!card.classList.contains('is-clone')) {
+                             visibleOriginals++;
+                        }
                     } else {
                         card.style.display = 'none';
                     }
                 });
 
-                // Show "no results" message if needed
-                if (visibleCount === 0) {
-                    if (!document.getElementById('noResults')) {
-                        const noResults = document.createElement('div');
-                        noResults.id = 'noResults';
-                        noResults.className = 'col-span-full text-center py-16';
-                        noResults.innerHTML =
-                            '<i class="fas fa-search text-4xl app-text-muted mb-4 block"></i><p class="text-xl app-text-muted">No items match your category.</p>';
-                        document.getElementById('catalogGrid').appendChild(noResults);
+                // 2. Handle Empty State
+                let noResultsMsg = document.getElementById('noResultsMsg');
+                if (visibleOriginals === 0) {
+                    if (!noResultsMsg) {
+                        noResultsMsg = document.createElement('div');
+                        noResultsMsg.id = 'noResultsMsg';
+                        // Changed from absolute to relative to maintain container height
+                        noResultsMsg.className = 'relative w-full h-96 flex flex-col items-center justify-center text-center';
+                        // Modified inner HTML to remove background
+                        noResultsMsg.innerHTML = `
+                            <div class="p-8">
+                                <i class="fas fa-search-location text-5xl text-orange-500/50 mb-4 block"></i>
+                                <p class="text-xl font-medium text-white">Couldn't find items here</p>
+                                <p class="text-sm app-text-muted mt-2">Try selecting another category</p>
+                            </div>
+                        `;
+                        track.parentNode.appendChild(noResultsMsg);
                     }
+                    noResultsMsg.style.display = 'flex';
+                    track.style.display = 'none'; // Hide track
                 } else {
-                    const noResults = document.getElementById('noResults');
-                    if (noResults) noResults.remove();
+                    if (noResultsMsg) noResultsMsg.style.display = 'none';
+                    track.style.display = 'flex';
+                }
+
+                // 3. Handle Animation Logic
+                // If few items (e.g. <= 4), disable animation to prevent awkward loops with gaps
+                // or if they fit within screen width.
+                // NOTE: 'visibleCount' includes clones. 'visibleOriginals' is the real count.
+                
+                // Logic: If we have enough originals to justify scrolling?
+                // Let's say if we have fewer than 5 items, we just center them and kill animation.
+                
+                if (visibleOriginals > 0 && visibleOriginals < 5) {
+                    track.classList.remove('animate-marquee');
+                    track.classList.add('justify-center'); // Center items if static
+                    // Also need to hide clones to avoid duplicate display in static mode
+                     cards.forEach(card => {
+                        if(card.classList.contains('is-clone')) {
+                            card.style.display = 'none';
+                        }
+                    });
+                } else {
+                    // Re-enable animation
+                    // Ensure clones are visible (if they match category)
+                    cards.forEach(card => {
+                        const cardCategory = card.dataset.category;
+                        const match = (category === 'all' || cardCategory.toLowerCase() === category.toLowerCase());
+                        if(match) {
+                            card.style.display = 'block'; // Show matched clones too
+                        }
+                    });
+
+                    track.classList.remove('justify-center');
+                    track.classList.add('animate-marquee');
                 }
             }
 
-            // Modal integration
+            // Modal integration (unchanged)
             function showItemModal(card) {
+                // ... same modal logic ...
                 const title = card.dataset.itemTitle;
                 const desc = card.dataset.itemDesc;
                 const price = card.dataset.itemPrice;
                 const image = card.dataset.itemImage;
                 const category = card.dataset.category;
 
-                // Update modal (assuming modal exists in layout)
-                if (document.getElementById('itemTitle')) {
-                    document.getElementById('itemTitle').textContent = title;
-                }
-                if (document.getElementById('itemImage')) {
-                    document.getElementById('itemImage').src = image || 'https://via.placeholder.com/300x200';
-                }
-                if (document.getElementById('itemDesc')) {
-                    document.getElementById('itemDesc').textContent = desc || 'No description available.';
-                }
-                if (document.getElementById('itemPrice')) {
-                    document.getElementById('itemPrice').textContent = 'Rp ' + (price ? price.toString().replace(
-                        /\B(?=(\d{3})+(?!\d))/g, '.') : '-');
-                }
-                if (document.getElementById('itemCategory')) {
-                    document.getElementById('itemCategory').textContent = category;
-                }
+                if(document.getElementById('itemTitle')) document.getElementById('itemTitle').textContent = title;
+                if(document.getElementById('itemImage')) document.getElementById('itemImage').src = image || 'https://via.placeholder.com/300x200';
+                if(document.getElementById('itemDesc')) document.getElementById('itemDesc').textContent = desc || 'No description available.';
+                if(document.getElementById('itemPrice')) document.getElementById('itemPrice').textContent = 'Rp ' + (price ? price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') : '-');
+                if(document.getElementById('itemCategory')) document.getElementById('itemCategory').textContent = category;
 
-                // Show modal
                 const modal = document.getElementById('itemModal');
-                if (modal) {
-                    modal.style.display = 'block';
-                }
+                if (modal) modal.style.display = 'block';
             }
         </script>
 

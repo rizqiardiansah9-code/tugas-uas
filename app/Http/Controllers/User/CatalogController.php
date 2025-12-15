@@ -14,7 +14,7 @@ class CatalogController extends Controller
     public function index(Request $request)
     {
         // Simple: load all items. Controller can be extended with paging/filtering later.
-        $items = Item::all();
+        $items = Item::where('is_official', true)->get();
         return view('user.catalog', compact('items'));
     }
 }

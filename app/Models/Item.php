@@ -16,6 +16,7 @@ class Item extends Model
         'price',
         'image',
         'category_id',
+        'is_official',
     ];
 
     /**
@@ -41,6 +42,6 @@ class Item extends Model
      */
     public static function countNewWithinMinutes(int $minutes = 8): int
     {
-        return static::where('created_at', '>=', now()->subMinutes($minutes))->count();
+        return static::where('is_official', true)->where('created_at', '>=', now()->subMinutes($minutes))->count();
     }
 }

@@ -211,7 +211,7 @@ class ItemController extends Controller
             $categories = collect();
         }
 
-        $itemsQuery = Item::with('category')->orderBy('created_at', 'desc');
+        $itemsQuery = Item::with('category')->where('is_official', true)->orderBy('created_at', 'desc');
 
         if ($categorySlug) {
             $cat = Category::where('slug', $categorySlug)->first();

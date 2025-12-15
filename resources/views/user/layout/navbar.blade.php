@@ -1,7 +1,7 @@
 <nav class="backdrop-blur-md h-20 flex items-center justify-between px-6 lg:px-8">
     <!-- Logo -->
     <a href="/" class="flex items-center gap-3">
-        <i class="fas fa-crosshairs text-app-accent animate-pulse text-3xl drop-shadow-md"></i>
+        <i class="fas fa-crosshairs text-[#f97316] animate-pulse text-3xl drop-shadow-md"></i>
         <div class="leading-none">
             <div class="text-xl font-rajdhani font-bold text-white tracking-wider">TEMAN</div>
             <div class="text-sm text-app-muted">Marketplace</div>
