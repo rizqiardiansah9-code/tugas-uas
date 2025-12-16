@@ -14,7 +14,7 @@
 }
 </style>
 @section('navbar')
-  @include('user.multi_page.trade_navbar')
+  @include('user.multi_page.multi_navbar')
 @endsection
 
 @section('hideFooter')
@@ -26,8 +26,14 @@
             return {
                 myInventory: @json($userInventory),
                 marketInventory: @json($marketInventory),
-                myOffer: [],
-                theirOffer: [],
+                myOffer: JSON.parse(localStorage.getItem('trade_my_offer') || '[]'),
+                theirOffer: JSON.parse(localStorage.getItem('trade_their_offer') || '[]'),
+
+                init() {
+                    this.$watch('myOffer', (val) => localStorage.setItem('trade_my_offer', JSON.stringify(val)));
+                    this.$watch('theirOffer', (val) => localStorage.setItem('trade_their_offer', JSON.stringify(val)));
+                },
+
                 activeItem: null,
                 popoverPos: { x: 0, y: 0 },
                 offerOpen: true,
@@ -234,7 +240,7 @@
          x-transition:leave="transition ease-in duration-150"
          x-transition:leave-start="opacity-100 scale-100"
          x-transition:leave-end="opacity-0 scale-95"
-         class="fixed z-[150] w-[300px] bg-[#1a1d2b] border border-[#2d3246] rounded-xl shadow-2xl overflow-hidden p-4"
+         class="fixed z-[150] w-[300px] bg-[#1a1d2b] border border-[#2d3246]  shadow-2xl overflow-hidden p-4"
          :style="`top: ${popoverPos.y}px; left: ${popoverPos.x}px`"
          @click.outside="closeDetail()"
          @scroll.window="closeDetail()"
@@ -248,11 +254,11 @@
             <button @click="closeDetail()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
          </div>
          
-         <div class="relative w-full h-40 bg-[#151823] rounded-lg mb-3 flex items-center justify-center border border-white/5">
+         <div class="relative w-full h-40 bg-[#151823]  mb-3 flex items-center justify-center border border-white/5">
              <img :src="activeItem?.image ? '/storage/' + activeItem.image : 'https://via.placeholder.com/200'" class="max-h-32 object-contain drop-shadow-lg">
          </div>
          
-         <div class="flex justify-between items-center bg-[#4c6fff] text-white p-3 rounded-lg">
+         <div class="flex justify-between items-center bg-[#4c6fff] text-white p-3 ">
             <span class="font-semibold text-sm">Price</span>
             <span class="font-bold text-lg" x-text="activeItem ? formatPrice(activeItem.price) : ''"></span>
          </div>
@@ -280,7 +286,7 @@
   width:100%;
   height:100%;
   background:var(--card);
-  border-radius:10px;
+  border-radius:0;
   overflow:hidden;
 }
 
@@ -419,6 +425,11 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
 </style>
 
 <div class="relative overflow-hidden -mx-6" style="width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;">
@@ -426,7 +437,7 @@
 <!-- TOP BAR -->
 <div class="grid grid-cols-[1fr_200px_1fr] gap-4 px-6 py-6 items-start">
 
-    <div class="bg-[#12141c] rounded-lg overflow-hidden flex flex-col" >
+    <div class="bg-[#12141c]  overflow-hidden flex flex-col" >
         <!-- Header -->
         <div class="flex items-center justify-between p-4 bg-[#151823] border-b border-white/5 cursor-pointer select-none" @click="offerOpen = !offerOpen">
             <div class="flex items-center gap-3">
@@ -472,15 +483,33 @@
     </div>
 
   <div class="flex flex-col gap-3 justify-center">
-    <button class="bg-[#f97316] py-3 rounded font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2" 
+    <button class="relative group overflow-hidden w-full py-4  font-bold text-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]" 
+            style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); box-shadow: 0 10px 30px -10px rgba(249, 115, 22, 0.6);"
             :disabled="!canTrade || isLoading" 
             @click="submitTrade()">
-        <span x-show="!isLoading">Trade</span>
-        <i x-show="isLoading" class="fas fa-spinner fa-spin"></i>
+        
+        <!-- Shine effect -->
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
+
+        <span x-show="!isLoading" class="flex items-center gap-3 relative z-10">
+            TRADENOW <i class="fas fa-exchange-alt"></i>
+        </span>
+        <i x-show="isLoading" class="fas fa-spinner fa-spin relative z-10"></i>
     </button>
+    
+    <!-- Balance Indicator -->
+    <div class="bg-[#151823] p-4  border border-white/5 text-center shadow-lg w-full">
+        <div class="text-gray-400 text-[10px] uppercase tracking-wider mb-1 flex items-center justify-center gap-1 font-semibold">
+            Needed for trade <i class="fas fa-info-circle text-gray-500"></i>
+        </div>
+        <div class="text-2xl font-bold font-rajdhani" 
+             :class="myTotal < theirTotal ? 'text-red-500' : 'text-gray-200'"
+             x-text="formatPrice(Math.max(0, theirTotal - myTotal))">
+        </div>
+    </div>
   </div>
 
-    <div class="bg-[#12141c] rounded-lg overflow-hidden flex flex-col">
+    <div class="bg-[#12141c]  overflow-hidden flex flex-col">
         <!-- Header -->
         <div class="flex items-center justify-between p-4 bg-[#151823] border-b border-white/5 cursor-pointer select-none transition-colors hover:bg-[#1c202e]" 
              @click="receiveOpen = !receiveOpen">
@@ -533,7 +562,7 @@
 <div class="grid grid-cols-[1fr_200px_1fr] gap-4 px-6 pb-10 items-stretch h-[calc(100vh-280px)] min-h-[500px]">
 
 <!-- LEFT -->
-<section class="bg-[#12141c] rounded-lg flex flex-col h-full overflow-hidden min-h-0">
+<section class="bg-[#12141c]  flex flex-col h-full overflow-hidden min-h-0">
 
   <div class="h-[56px] flex items-center justify-between px-4 border-b border-white/5 gap-4">
     <!-- Search Box -->
@@ -552,7 +581,7 @@
     </div>
   </div>
 
-  <div class="flex-1 min-h-0 overflow-y-auto no-scrollbar bg-[#12141c] p-4">
+  <div class="flex-1 min-h-0 overflow-y-auto no-scrollbar bg-[#12141c] p-4" @scroll="closeDetail()">
       <!-- USER INVENTORY GRID -->
       <div class="catalog-grid">
         <template x-for="item in filteredMyInventory" :key="item.id">
@@ -562,15 +591,15 @@
                       <!-- Selected overlay with cart icon -->
                       <div x-show="isInOffer(item)" 
                            class="absolute inset-0 bg-black/50 z-10 flex items-center justify-center">
-                          <div class="w-12 h-12 bg-black/80 rounded-lg flex items-center justify-center">
+                          <div class="w-12 h-12 bg-black/80  flex items-center justify-center">
                               <i class="fas fa-check text-white text-lg"></i>
                           </div>
                       </div>
 
                       <img :src="item.image ? '/storage/' + item.image : 'https://via.placeholder.com/300x200?text=No+Image'" class="item-image">
                       <div class="indicators">
-                          <div class="item-name" x-text="item.name"></div>
-                          <div class="price" x-text="formatPrice(item.price)"></div>
+                          <div class="item-name font-bold text-sm text-gray-200 tracking-tight" x-text="item.name"></div>
+                          <div class="price font-rajdhani font-bold text-[#f97316]" x-text="formatPrice(item.price)"></div>
                       </div>
                       <div class="buttons z-20">
                           <div class="btn-wrap">
@@ -599,7 +628,7 @@
 </section>
 
 <!-- FILTER -->
-<aside class="bg-[#12141c] rounded-lg flex flex-col h-full overflow-hidden min-h-0">
+<aside class="bg-[#12141c]  flex flex-col h-full overflow-hidden min-h-0">
 
   <div class="h-[56px] flex items-center px-4 border-b border-white/5 font-semibold">
     Filters
@@ -669,7 +698,7 @@
 </aside>
 
 <!-- RIGHT -->
-<section class="bg-[#12141c] rounded-lg flex flex-col h-full overflow-hidden min-h-0">
+<section class="bg-[#12141c]  flex flex-col h-full overflow-hidden min-h-0">
 
   <div class="h-[56px] flex items-center justify-between px-4 border-b border-white/5 gap-4">
     <!-- Search Box -->
@@ -688,7 +717,7 @@
     </div>
   </div>
 
-    <div class="flex-1 min-h-0 overflow-y-auto no-scrollbar bg-[#12141c] p-4">
+    <div class="flex-1 min-h-0 overflow-y-auto no-scrollbar bg-[#12141c] p-4" @scroll="closeDetail()">
         <!-- MARKET INVENTORY GRID -->
         <div class="catalog-grid">
             <template x-for="item in filteredMarketInventory" :key="item.id">
@@ -698,15 +727,15 @@
                         <!-- Selected overlay with cart icon -->
                         <div x-show="isInReceive(item)" 
                              class="absolute inset-0 bg-black/50 z-10 flex items-center justify-center">
-                            <div class="w-12 h-12 bg-black/80 rounded-lg flex items-center justify-center">
+                            <div class="w-12 h-12 bg-black/80  flex items-center justify-center">
                                 <i class="fas fa-shopping-cart text-white text-lg"></i>
                             </div>
                         </div>
                         
                         <img :src="item.image ? '/storage/' + item.image : 'https://via.placeholder.com/300x200?text=No+Image'" class="item-image">
                         <div class="indicators">
-                            <div class="item-name" x-text="item.name"></div>
-                            <div class="price" x-text="formatPrice(item.price)"></div>
+                            <div class="item-name font-bold text-sm text-gray-200 tracking-tight" x-text="item.name"></div>
+                            <div class="price font-rajdhani font-bold text-[#f97316]" x-text="formatPrice(item.price)"></div>
                         </div>
                         <div class="buttons z-20">
                             <div class="btn-wrap">
@@ -801,7 +830,7 @@
   </section>
 
   {{-- Trade page specific footer --}}
-  @include('user.multi_page.trade_footer')
+  @include('user.multi_page.multi_footer')
 
 </div>
 @endsection

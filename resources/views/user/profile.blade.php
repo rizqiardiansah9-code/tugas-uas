@@ -3,7 +3,7 @@
 @section('title', 'My Profile')
 
 @section('navbar')
-  @include('user.multi_page.trade_navbar')
+  @include('user.multi_page.multi_navbar')
 @endsection
 
 @section('content')
@@ -30,7 +30,7 @@
       width:100%;
       height:100%;
       background:var(--card);
-      border-radius:10px;
+      border-radius:0;
       overflow:hidden;
     }
     
@@ -98,7 +98,7 @@
 
             <!-- Left Column: Avatar & Quick Info -->
             <div class="lg:w-1/3">
-                <div class="bg-[#12141c] border border-white/5 rounded-xl shadow-xl p-6 text-center relative overflow-hidden">
+                <div class="bg-[#12141c] border border-white/5  shadow-xl p-6 text-center relative overflow-hidden">
                     <!-- Background Decoration -->
                     <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-[#f97316]/20 to-transparent"></div>
 
@@ -135,12 +135,12 @@
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="bg-[#12141c] border border-white/5 rounded-xl p-4 mt-6 shadow-lg">
-                    <button type="button" class="w-full py-3 rounded-lg font-bold transition-all duration-300 bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-white/5 shadow-md" id="toggleButton">
+                <div class="bg-[#12141c] border border-white/5  p-4 mt-6 shadow-lg">
+                    <button type="button" class="w-full py-3  font-bold transition-all duration-300 bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-white/5 shadow-md" id="toggleButton">
                         <i class="fas fa-edit mr-2"></i> Click to Edit Profile
                     </button>
 
-                    <button type="button" class="w-full py-2 mt-3 rounded-lg text-sm font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors hidden border border-transparent hover:border-red-500/30" id="batal">
+                    <button type="button" class="w-full py-2 mt-3  text-sm font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors hidden border border-transparent hover:border-red-500/30" id="batal">
                         <i class="fas fa-times mr-1"></i> Cancel Edit
                     </button>
                 </div>
@@ -148,21 +148,21 @@
 
             <!-- Right Column: Details Form -->
             <div class="lg:w-2/3 space-y-8">
-                <div class="bg-[#12141c] border border-white/5 rounded-xl shadow-xl overflow-hidden">
+                <div class="bg-[#12141c] border border-white/5  shadow-xl overflow-hidden">
                     <div class="px-6 py-4 border-b border-white/5 bg-white/5">
-                        <h3 class="text-lg font-semibold text-white">Account Detail</h3>
+                        <h3 class="text-lg font-rajdhani font-bold text-white uppercase tracking-wider">Account Detail</h3>
                     </div>
 
                     <div class="p-6 space-y-6">
                         <!-- Nama -->
                         <div class="group">
-                            <label for="nama" class="block text-sm font-medium text-gray-400 mb-2">Name</label>
+                            <label for="nama" class="block text-label mb-2">Name</label>
                             <div class="relative">
                                 <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-user text-gray-500"></i>
                                 </span>
                                 <input type="text"
-                                    class="w-full bg-[#0e1015] border border-white/10 rounded-lg py-2.5 pl-10 pr-4 text-white placeholder-gray-600 focus:outline-none focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316] transition-all read-only:opacity-60 read-only:cursor-not-allowed read-only:focus:border-white/10 read-only:focus:ring-0 @error('nama') border-red-500 focus:border-red-500 @enderror"
+                                    class="w-full bg-[#0e1015] border border-white/10  py-2.5 pl-10 pr-4 text-white placeholder-gray-600 focus:outline-none focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316] transition-all read-only:opacity-60 read-only:cursor-not-allowed read-only:focus:border-white/10 read-only:focus:ring-0 @error('nama') border-red-500 focus:border-red-500 @enderror font-medium"
                                     name="nama" id="nama" placeholder="Full Name"
                                     value="{{ Auth::user()->nama }}" data-initial-value="{{ Auth::user()->nama }}" readonly>
                             </div>
@@ -173,12 +173,12 @@
 
                         <!-- Email -->
                         <div class="group opacity-70" title="Email cannot be changed">
-                            <label for="email" class="block text-sm font-medium text-gray-400 mb-2">Email Address</label>
+                            <label for="email" class="block text-label mb-2">Email Address</label>
                             <div class="relative">
                                 <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-envelope text-gray-500"></i>
                                 </span>
-                                <input type="email" class="w-full bg-[#0e1015] border border-white/10 rounded-lg py-2.5 pl-10 pr-4 text-gray-500 cursor-not-allowed focus:outline-none"
+                                <input type="email" class="w-full bg-[#0e1015] border border-white/10  py-2.5 pl-10 pr-4 text-gray-500 cursor-not-allowed focus:outline-none"
                                     name="email" id="email" placeholder="Email"
                                     value="{{ Auth::user()->email }}" data-initial-value="{{ Auth::user()->email }}"
                                     readonly>
@@ -188,13 +188,13 @@
                 </div>
 
                 <!-- INVENTORY SECTION -->
-                <div class="bg-[#12141c] border border-white/5 rounded-xl shadow-xl overflow-hidden">
+                <div class="bg-[#12141c] border border-white/5  shadow-xl overflow-hidden">
                     <div class="px-6 py-4 border-b border-white/5 bg-white/5 flex justify-between items-center">
                         <div class="flex items-center gap-3">
-                            <h3 class="text-lg font-semibold text-white">My Inventory</h3>
-                            <span class="text-xs bg-white/10 px-2 py-1 rounded text-gray-400">{{ $inventory->count() }} Items</span>
+                            <h3 class="text-lg font-rajdhani font-bold text-white uppercase tracking-wider">My Inventory</h3>
+                            <span class="text-xs bg-white/10 px-2 py-1 rounded text-gray-400 font-bold">{{ $inventory->count() }} Items</span>
                         </div>
-                        <button type="button" onclick="openAddItemModal()" class="text-sm bg-green-600/20 text-green-400 hover:bg-green-600/30 hover:text-green-300 border border-green-600/20 px-3 py-1.5 rounded-lg transition-all flex items-center gap-2">
+                        <button type="button" onclick="openAddItemModal()" class="text-sm bg-green-600/20 text-green-400 hover:bg-green-600/30 hover:text-green-300 border border-green-600/20 px-3 py-1.5  transition-all flex items-center gap-2 font-bold uppercase tracking-wider text-xs">
                             <i class="fas fa-plus"></i> Add Item
                         </button>
                     </div>
@@ -208,8 +208,8 @@
                                             <div class="item-details">
                                                 <img class="item-image" src="{{ $item->image ? asset('storage/' . $item->image) : 'https://via.placeholder.com/300x200?text=No+Image' }}" alt="{{ $item->name }}">
                                                 <div class="indicators">
-                                                    <div class="item-name">{{ $item->name }}</div>
-                                                    <div class="price">${{ number_format($item->price, 2) }}</div>
+                                                    <div class="item-name font-bold text-sm text-gray-200 tracking-tight">{{ $item->name }}</div>
+                                                    <div class="price font-rajdhani font-bold text-[#f97316]">${{ number_format($item->price, 2) }}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -235,7 +235,7 @@
         
         <!-- Modal Content -->
         <div class="absolute inset-0 flex items-center justify-center p-4">
-            <div class="bg-[#151823] border border-white/10 rounded-xl shadow-2xl w-full max-w-md transform scale-95 opacity-0 transition-all duration-300" id="modalContent">
+            <div class="bg-[#151823] border border-white/10  shadow-2xl w-full max-w-md transform scale-95 opacity-0 transition-all duration-300" id="modalContent">
                 <div class="p-6">
                     <div class="flex justify-between items-center mb-6">
                         <h3 class="text-xl font-bold text-white">Add New Item</h3>
@@ -251,7 +251,7 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-400 mb-1.5">Item Name</label>
                                 <input type="text" name="name" required
-                                    class="w-full bg-[#0e1015] border border-white/10 rounded-lg py-2.5 px-4 text-white focus:outline-none focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316] transition-all"
+                                    class="w-full bg-[#0e1015] border border-white/10  py-2.5 px-4 text-white focus:outline-none focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316] transition-all"
                                     placeholder="e.g. Dragon Lore">
                             </div>
 
@@ -259,7 +259,7 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-400 mb-1.5">Price ($)</label>
                                 <input type="number" step="0.01" name="price" required
-                                    class="w-full bg-[#0e1015] border border-white/10 rounded-lg py-2.5 px-4 text-white focus:outline-none focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316] transition-all"
+                                    class="w-full bg-[#0e1015] border border-white/10  py-2.5 px-4 text-white focus:outline-none focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316] transition-all"
                                     placeholder="0.00">
                             </div>
 
@@ -268,7 +268,7 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-400 mb-1.5">Category</label>
                                     <select name="category_id" required
-                                        class="w-full bg-[#0e1015] border border-white/10 rounded-lg py-2.5 px-4 text-white focus:outline-none focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316] transition-all appearance-none cursor-pointer">
+                                        class="w-full bg-[#0e1015] border border-white/10  py-2.5 px-4 text-white focus:outline-none focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316] transition-all appearance-none cursor-pointer">
                                         <option value="" disabled selected>Select Category</option>
                                         @foreach($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -278,7 +278,7 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-400 mb-1.5">Rarity</label>
                                     <select name="rarity" required
-                                        class="w-full bg-[#0e1015] border border-white/10 rounded-lg py-2.5 px-4 text-white focus:outline-none focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316] transition-all appearance-none cursor-pointer">
+                                        class="w-full bg-[#0e1015] border border-white/10  py-2.5 px-4 text-white focus:outline-none focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316] transition-all appearance-none cursor-pointer">
                                         <option value="" disabled selected>Select Rarity</option>
                                         <option value="common" class="text-gray-400">Common</option>
                                         <option value="uncommon" class="text-blue-400">Uncommon</option>
@@ -296,23 +296,23 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-400 mb-1.5">Item Image</label>
                                 <input type="file" name="image" accept="image/*"
-                                    class="w-full bg-[#0e1015] border border-white/10 rounded-lg text-sm text-gray-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-white/5 file:text-white hover:file:bg-white/10 transition-all">
+                                    class="w-full bg-[#0e1015] border border-white/10  text-sm text-gray-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-white/5 file:text-white hover:file:bg-white/10 transition-all">
                             </div>
                             
                             <!-- Description (Optional) -->
                             <div>
                                 <label class="block text-sm font-medium text-gray-400 mb-1.5">Description (Optional)</label>
                                 <textarea name="description" rows="3"
-                                    class="w-full bg-[#0e1015] border border-white/10 rounded-lg py-2.5 px-4 text-white focus:outline-none focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316] transition-all"
+                                    class="w-full bg-[#0e1015] border border-white/10  py-2.5 px-4 text-white focus:outline-none focus:border-[#f97316] focus:ring-1 focus:ring-[#f97316] transition-all"
                                     placeholder="Item description..."></textarea>
                             </div>
                         </div>
 
                         <div class="mt-6 flex gap-3">
-                            <button type="button" onclick="closeAddItemModal()" class="flex-1 py-2.5 rounded-lg font-medium text-gray-400 hover:bg-white/5 transition-colors">
+                            <button type="button" onclick="closeAddItemModal()" class="flex-1 py-2.5  font-medium text-gray-400 hover:bg-white/5 transition-colors">
                                 Cancel
                             </button>
-                            <button type="submit" class="flex-1 py-2.5 rounded-lg font-bold bg-[#f97316] text-white hover:bg-[#ea580c] shadow-lg shadow-[#f97316]/20 transition-all">
+                            <button type="submit" class="flex-1 py-2.5  font-bold bg-[#f97316] text-white hover:bg-[#ea580c] shadow-lg shadow-[#f97316]/20 transition-all">
                                 Add Item
                             </button>
                         </div>

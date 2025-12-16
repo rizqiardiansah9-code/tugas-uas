@@ -29,7 +29,7 @@
   width:100%;
   height:100%;
   background:var(--card);
-  border-radius:10px;
+  border-radius:0;
   overflow:hidden;
 }
 
@@ -71,7 +71,7 @@
 }
 
 .item-name{
-  font-size:13px;
+  font-size:12px;
   font-weight:600;
   white-space:nowrap;
   overflow:hidden;
@@ -80,7 +80,7 @@
 }
 
 .price{
-  font-size:15px;
+  font-size:13px;
   font-weight:700;
   margin-top:2px;
   color: #22c55e;
@@ -210,7 +210,7 @@
 
                     <!-- CTA Button -->
                     <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-                        <button id="openLogin" class="navbar-btn px-5 py-2.5 text-base">Sign In</button>
+                        <button onclick="openModal('loginModalOverlay')" class="navbar-btn px-5 py-2.5 text-base">Sign In</button>
                         <span class="text-white text-sm app-text-muted">
                             <i class="fas fa-gift mr-2 text-orange-500"></i>Start now for a bonus
                         </span>
@@ -221,39 +221,38 @@
                 <div class="relative hidden lg:block h-[600px] px-6 lg:px-12">
                     <div class="absolute inset-0 flex items-center justify-center">
                         <div class="relative w-96 h-96">
-                            <!-- Specialist Gloves - Field Agent -->
                             <!-- Specialist Gloves - Field Agent: smaller, thicker border, subtle glow -->
-                            <div class="absolute top-4 right-8 rounded-lg overflow-visible"
+                            <div class="absolute top-4 right-8  overflow-visible"
                                 style="width:14rem;height:9rem;">
-                                <div class="absolute -inset-6 rounded-2xl pointer-events-none"
+                                <div class="absolute -inset-6  pointer-events-none"
                                     style="background: radial-gradient(closest-side, rgba(249,115,22,0.18), transparent 70%); filter: blur(22px);">
                                 </div>
                                 <div
-                                    class="relative w-full h-full rounded-lg overflow-hidden border-2 border-orange-500/40 shadow-lg bg-gradient-to-br from-white/0 to-white/0">
+                                    class="relative w-full h-full  overflow-hidden border-2 border-orange-500/40 shadow-lg bg-gradient-to-br from-white/0 to-white/0">
                                     <img src="{{ asset('assets/images/Specialist-Gloves-Field-Agent.webp') }}"
                                         alt="Specialist Gloves Field Agent" class="w-full h-full object-cover">
                                 </div>
-                            </div <!-- M4A1-S Hot Rod: reduced size, lifted and rotated -->
-                            <div class="absolute top-52 left-6 rounded-lg overflow-visible transform -rotate-6"
+                            </div>
+                            <!-- M4A1-S Hot Rod: reduced size, lifted and rotated -->                            <div class="absolute top-52 left-6  overflow-visible transform -rotate-6"
                                 style="width:12rem;height:7.5rem;">
-                                <div class="absolute -inset-5 rounded-2xl pointer-events-none"
+                                <div class="absolute -inset-5  pointer-events-none"
                                     style="background: radial-gradient(closest-side, rgba(249,115,22,0.15), transparent 70%); filter: blur(18px);">
                                 </div>
                                 <div
-                                    class="relative w-full h-full rounded-lg overflow-hidden border-2 border-orange-500/30 shadow-lg">
+                                    class="relative w-full h-full  overflow-hidden border-2 border-orange-500/30 shadow-lg">
                                     <img src="{{ asset('assets/images/M4A1-S-Hot-Rod.webp') }}" alt="M4A1-S Hot Rod"
                                         class="w-full h-full object-cover">
                                 </div>
                             </div>
 
                             <!-- Butterfly Knife Slaughter: smaller, angled with gentle glow -->
-                            <div class="absolute bottom-0 left-8 rounded-lg overflow-visible transform rotate-0"
+                            <div class="absolute bottom-0 left-8  overflow-visible transform rotate-0"
                                 style="width:11.5rem;height:9.5rem;">
-                                <div class="absolute -inset-5 rounded-2xl pointer-events-none"
+                                <div class="absolute -inset-5  pointer-events-none"
                                     style="background: radial-gradient(closest-side, rgba(249,115,22,0.13), transparent 70%); filter: blur(16px);">
                                 </div>
                                 <div
-                                    class="relative w-full h-full rounded-lg overflow-hidden border-2 border-orange-500/30 shadow-lg">
+                                    class="relative w-full h-full  overflow-hidden border-2 border-orange-500/30 shadow-lg">
                                     <img src="{{ asset('assets/images/Butterfly-Knife-Slaughter.webp') }}"
                                         alt="Butterfly Knife Slaughter" class="w-full h-full object-cover">
                                 </div>
@@ -313,8 +312,8 @@
         <div class="px-6">
             <!-- Category Buttons (Modern Style) -->
             <div class="mb-8 mt-12 flex justify-center">
-                <div class="inline-flex flex-wrap justify-center gap-3 p-1.5 bg-black/20 backdrop-blur-sm rounded-2xl border border-white/5">
-                    <button class="category-filter relative px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 overflow-hidden group active"
+                <div class="inline-flex flex-wrap justify-center gap-3 p-1.5 bg-black/20 backdrop-blur-sm  border border-white/5">
+                    <button class="category-filter relative px-6 py-2.5  font-bold text-sm transition-all duration-300 overflow-hidden group active"
                         data-category="all">
                         <span class="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-500 opacity-0 group-[.active]:opacity-100 transition-opacity duration-300"></span>
                         <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -322,7 +321,7 @@
                     </button>
 
                     @foreach(['Guns', 'Gloves', 'Knifes', 'Stickers'] as $cat)
-                    <button class="category-filter relative px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 overflow-hidden group"
+                    <button class="category-filter relative px-6 py-2.5  font-bold text-sm transition-all duration-300 overflow-hidden group"
                         data-category="{{ $cat }}">
                         <span class="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-500 opacity-0 group-[.active]:opacity-100 transition-opacity duration-300"></span>
                         <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -363,22 +362,21 @@
                                             @endif
                                             
                                             <div class="indicators">
-                                                <div class="item-name">{{ $item->name }}</div>
-                                                <div class="price">${{ number_format($item->price, 2) }}</div>
+                                                <div class="item-name font-bold text-sm text-gray-200 tracking-tight">{{ $item->name }}</div>
+                                                <div class="price font-rajdhani font-bold text-lg text-[#f97316]">${{ number_format($item->price, 2) }}</div>
                                             </div>
                                             
                                             <div class="buttons">
                                                 <div class="btn-wrap">
-                                                <button class="btn-unstack" onclick="@auth window.location.href='{{ route('user.trade') }}' @else openModal('loginModalOverlay') @endauth"><i class="fas fa-shopping-cart"></i> Cart</button>
+                                                <button class="btn-unstack font-rajdhani font-bold uppercase tracking-wider" onclick="@auth window.location.href='{{ route('user.trade') }}' @else openModal('loginModalOverlay') @endauth"><i class="fas fa-shopping-cart"></i> Cart</button>
                                                     <button class="btn-more">⋮</button>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
                             @empty
-                                <div class="w-full text-center py-16 flex-shrink-0" style="width: 100vw;">
+                                <div class="w-full text-center py-16 flex-shrink-0">
                                     <i class="fas fa-inbox text-4xl app-text-muted mb-4 block"></i>
                                     <p class="text-xl app-text-muted">No items found.</p>
                                 </div>

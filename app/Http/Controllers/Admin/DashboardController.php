@@ -45,7 +45,7 @@ class DashboardController extends Controller
 
     public function tampilProfil()
     {
-    return view('admin.profil');
+    return view('admin.profile');
     }
 
     public function updateProfil(Request $request)
@@ -69,13 +69,13 @@ class DashboardController extends Controller
     $validatedData['image'] = $request->file('image')->store('profil-pic', 'public');
     }
     User::where('id', Auth::user()->id)->update($validatedData);
-    return redirect()->route('admin.profil')->with('success', 'Your profile has been updated successfully.');
+    return redirect()->route('admin.profile')->with('success', 'Your profile has been updated successfully.');
     }
 
     // GANTI PASSWORD
      public function tampilGantiPassword()
     {
-    return view('admin.ganti_password');
+    return view('admin.change_password');
     }
 
     public function updateGantiPassword(Request $request)

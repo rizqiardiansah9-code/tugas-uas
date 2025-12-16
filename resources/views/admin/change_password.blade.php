@@ -28,7 +28,7 @@
                     </div>
 
                     <!-- form start -->
-                    <form role="form" action="{{ route('admin.ganti-password') }}" method="post" id="gantiPasswordForm">
+                    <form role="form" action="{{ route('admin.change-password') }}" method="post" id="gantiPasswordForm">
                         @csrf
                         <div class="p-6 space-y-5">
 

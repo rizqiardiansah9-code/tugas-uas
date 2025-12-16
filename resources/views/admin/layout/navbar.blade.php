@@ -69,10 +69,10 @@
                     <p class="text-xs text-app-success font-mono">$ 14,250.00</p>
                 </div>
 
-                <a href="{{ route('admin.profil') }}" class="flex items-center px-4 py-2.5 text-sm text-app-muted hover:bg-app-cardHover hover:text-white transition-colors">
+                <a href="{{ route('admin.profile') }}" class="flex items-center px-4 py-2.5 text-sm text-app-muted hover:bg-app-cardHover hover:text-white transition-colors">
                     <i class="fas fa-user w-6 text-center mr-2"></i> My Profile
                 </a>
-                <a href="{{ route('admin.ganti-password') }}" class="flex items-center px-4 py-2.5 text-sm text-app-muted hover:bg-app-cardHover hover:text-white transition-colors">
+                <a href="{{ route('admin.change-password') }}" class="flex items-center px-4 py-2.5 text-sm text-app-muted hover:bg-app-cardHover hover:text-white transition-colors">
                     <i class="fas fa-lock w-6 text-center mr-2"></i> Change Password
                 </a>
 

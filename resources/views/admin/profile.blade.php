@@ -6,7 +6,7 @@
     <div class="max-w-5xl mx-auto pt-6">
 
         <!-- Form Wrapper -->
-        <form role="form" action="{{ route('admin.profil') }}" method="post" enctype="multipart/form-data" id="profilForm">
+        <form role="form" action="{{ route('admin.profile') }}" method="post" enctype="multipart/form-data" id="profilForm">
             @csrf
             @method('PUT')
 

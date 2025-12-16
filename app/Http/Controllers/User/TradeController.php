@@ -22,7 +22,7 @@ class TradeController extends Controller
         // Define rarities based on ItemController validation
         $rarities = ['common', 'uncommon', 'rare', 'mythical', 'legendary', 'ancient', 'exceedingly_rare', 'immortal'];
 
-        return view('user.trade_page', compact('userInventory', 'marketInventory', 'categories', 'rarities'));
+        return view('user.trade', compact('userInventory', 'marketInventory', 'categories', 'rarities'));
     }
 
     public function refresh()
@@ -71,12 +71,16 @@ class TradeController extends Controller
         // Remove my items
         $user->inventory()->detach($myItemsIds);
         
+        // Items given to market become OFFICIAL (System property/Market pool)
+        // so they appear in Admin Dashboard/Item List.
+        Item::whereIn('id', $myItemsIds)->update(['is_official' => true]);
+        
         // Add their items
-        // Important: In a real multi-user system, "their items" should be removed from someone else.
-        // Assuming "Market" is infinite/system based on current 'whereNotIn' logic which implies 
-        // "Market" = "Everything I don't have".
-        // So we just attach them.
         $user->inventory()->attach($theirItemsIds);
+
+        // Items taken from market become UNOFFICIAL (User property)
+        // so they are hidden from Admin Dashboard/Item List.
+        Item::whereIn('id', $theirItemsIds)->update(['is_official' => false]);
 
         return response()->json(['message' => 'Trade successful!']);
     }

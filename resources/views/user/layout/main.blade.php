@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>@yield('title', 'Teman')</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Fonts: Inter, Montserrat (Body), Rajdhani (Headers) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -20,9 +21,32 @@
             --app-accent-900:#7c2d00;
             --app-brand:#ff7a2d;
         }
-        /* Basic typography & background */
-        body{font-family:'Poppins',sans-serif;background:var(--app-bg);color:#fff;min-height:100vh}
-        .font-rajdhani{font-family:'Rajdhani',sans-serif}
+        /* TYPOGRAPHY OVERHAUL - TradeIt Style */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--app-bg);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            letter-spacing: -0.015em; /* Slight tight tracking like premium sites */
+        }
+        h1, h2, h3, h4, h5, h6, .font-heading {
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .font-rajdhani { font-family: 'Rajdhani', sans-serif; }
+        .font-montserrat { font-family: 'Montserrat', sans-serif; }
+        
+        /* Utility for small generic labels (like 'Price', 'Rarity') */
+        .text-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem; /* 12px */
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--app-muted);
+        }
 
         /* Background subtle grid pattern (used in login theme) */
         .bg-grid-pattern{

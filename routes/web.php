@@ -7,9 +7,11 @@ use App\Http\Controllers\User\CatalogController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\User\TradeController;
+use App\Http\Controllers\User\StoreController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('user.index');
+    // return view('welcome');
 });
 
 Route::middleware('guest')->group(function () {
@@ -25,6 +27,9 @@ Route::prefix('user')->name('user.')->group(function () {
     // Public pages
     // Protected user-only pages
     Route::middleware(['auth', 'isUser'])->group(function(){
+        // Store page
+        Route::get('/store', [StoreController::class, 'index'])->name('store');
+        
         // Trade page
         Route::get('/trade', [TradeController::class, 'index'])->name('trade');
         Route::get('/trade/refresh', [TradeController::class, 'refresh'])->name('trade.refresh');
@@ -34,6 +39,10 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::get('/profil', [App\Http\Controllers\User\UserProfileController::class, 'show'])->name('profil');
         Route::put('/profil', [App\Http\Controllers\User\UserProfileController::class, 'update'])->name('profil.update');
         Route::post('/profil/inventory', [App\Http\Controllers\User\UserProfileController::class, 'storeInventory'])->name('profil.inventory.store');
+        
+        // Change Password
+        Route::get('/change-password', [App\Http\Controllers\User\UserProfileController::class, 'editPassword'])->name('change-password');
+        Route::put('/change-password', [App\Http\Controllers\User\UserProfileController::class, 'updatePassword'])->name('change-password.update');
     });
 });
 
@@ -44,10 +53,10 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-        Route::get('/profil', [DashboardController::class, 'tampilProfil'])->name('profil');
-        Route::put('/profil', [DashboardController::class, 'updateProfil']);
-        Route::get('/ganti-password', [DashboardController::class, 'tampilGantiPassword'])->name('ganti-password');
-        Route::post('/ganti-password', [DashboardController::class, 'updateGantiPassword'])->name('ganti-password');
+        Route::get('/profile', [DashboardController::class, 'tampilProfil'])->name('profile');
+        Route::put('/profile', [DashboardController::class, 'updateProfil']);
+        Route::get('/change-password', [DashboardController::class, 'tampilGantiPassword'])->name('change-password');
+        Route::post('/change-password', [DashboardController::class, 'updateGantiPassword'])->name('change-password');
 
         // Admin user management
         Route::prefix('users')->name('users.')->group(function () {

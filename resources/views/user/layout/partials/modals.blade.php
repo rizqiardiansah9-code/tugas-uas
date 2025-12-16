@@ -2,23 +2,23 @@
 <div id="itemModalOverlay" class="modal-overlay" aria-hidden="true">
   <div class="modal" role="dialog" aria-modal="true">
     <div class="px-6 py-4 border-b border-app-border flex items-center justify-between">
-      <strong id="itemTitle" class="text-xl font-bold app-accent">Item Details</strong>
-      <button class="close-x text-2xl" data-close="itemModalOverlay">×</button>
+      <strong id="itemTitle" class="text-xl font-rajdhani font-bold uppercase tracking-wider app-accent">Item Details</strong>
+      <button class="close-x text-2xl hover:text-white transition-colors" data-close="itemModalOverlay">×</button>
     </div>
 
     <div class="modal-body px-6 py-6">
       <div class="flex gap-6 flex-wrap">
-        <img id="itemImage" src="" alt="" class="w-56 h-40 object-cover rounded-lg border border-app-border">
+        <img id="itemImage" src="" alt="" class="w-56 h-40 object-cover  border border-app-border">
         <div class="flex-1 min-w-[220px]">
-          <h3 id="itemTitle2" class="text-2xl font-semibold mb-2"></h3>
-          <p id="itemDesc" class="app-text-muted mb-4 leading-relaxed"></p>
-          <p class="text-lg font-bold text-app-accent">Price: <span id="itemPrice" class="text-white">-</span></p>
+          <h3 id="itemTitle2" class="text-2xl font-bold mb-2 text-white"></h3>
+          <p id="itemDesc" class="app-text-muted mb-4 leading-relaxed font-medium text-sm"></p>
+          <p class="text-lg font-bold text-app-accent font-rajdhani uppercase tracking-wider">Price: <span id="itemPrice" class="text-white font-rajdhani font-bold text-xl ml-2">-</span></p>
         </div>
       </div>
     </div>
 
     <div class="modal-footer px-6 py-4 border-t border-app-border text-right">
-      <button class="btn ghost" data-close="itemModalOverlay">Close</button>
+      <button class="btn ghost font-bold uppercase tracking-wider text-sm" data-close="itemModalOverlay">Close</button>
     </div>
   </div>
 </div>
@@ -41,61 +41,44 @@
     <!-- FORM -->
     <form id="loginForm" method="POST" action="{{ route('login') }}"
         class="px-6 py-6 space-y-4">
-      <h2 class="text-2xl font-bold text-white text-center mb-5">Sign Up</h2>
+      <h2 class="text-2xl font-bold text-white text-center mb-5 font-rajdhani uppercase tracking-wider">Sign In</h2>
       @csrf
       <!-- Intent: specify this login is for regular users (prevents admin login here) -->
       <input type="hidden" name="intent" value="user">
 
       <!-- Email -->
-      <div class="group">
-        <label class="text-xs text-gray-400 block mb-3" style="letter-spacing:1px;">
-          Email
-        </label>
-
-        <div class="relative">
-          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600">
-            <i class="fas fa-envelope"></i>
-          </span>
-
+      <div class="space-y-1">
+        <label class="text-label ml-1">Email</label>
+        <div class="relative group">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i class="fa-solid fa-envelope text-slate-500"></i>
+          </div>
           <input id="login_email" name="email" type="email" required
                  placeholder="email@gmail.com"
-                 class="w-full pl-12 pr-4 py-3.5 rounded-lg bg-white text-gray-800
-                 placeholder-gray-500 focus:outline-none focus:ring-2
-                 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900
-                 transition-all duration-300 hover:bg-gray-50">
+                 class="block w-full pl-10 pr-3 py-3.5 bg-[#0b0e11]/90 border border-slate-700  text-sm text-gray-200 placeholder-slate-600 focus:border-orange-500 focus:ring-orange-500 font-rajdhani shadow-inner font-medium">
         </div>
-
         @error('email')
           <p class="text-red-400 text-xs mt-2 animate-pulse">{{ $message }}</p>
         @enderror
       </div>
 
       <!-- Password -->
-      <div class="group">
-        <label class="text-xs text-gray-400 block mb-3" style="letter-spacing:1px;">
-          Passcode
-        </label>
-
-        <div class="relative">
-          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600">
-            <i class="fas fa-lock"></i>
-          </span>
-
-          <input id="login_password" type="password" name="password"
-                 required placeholder="••••••••"
-                 class="w-full pl-12 pr-12 py-3.5 rounded-lg bg-white text-gray-800
-                 placeholder-gray-500 focus:outline-none focus:ring-2
-                 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900
-                 transition-all duration-300 hover:bg-gray-50">
-
-          <!-- Eye Icon -->
-          <button type="button"
-                  class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 hover:text-orange-400 transition-colors toggle-eye"
-                  data-target="login_password" aria-label="Toggle password visibility">
-            <i class="fas fa-eye"></i>
+      <div class="space-y-1">
+        <label class="text-label ml-1">Passcode</label>
+        <div class="relative group">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i class="fa-solid fa-key text-slate-500"></i>
+          </div>
+          <input id="login_password" type="password" name="password" required
+                 placeholder="••••••••"
+                 class="block w-full pl-10 pr-10 py-3.5 bg-[#0b0e11]/90 border border-slate-700  text-sm text-gray-200 placeholder-slate-600 focus:border-orange-500 focus:ring-orange-500 font-rajdhani shadow-inner font-medium">
+          
+          <button type="button" 
+                  class="absolute inset-y-0 right-0 pr-3 text-slate-500 hover:text-orange-400 toggle-eye"
+                  data-target="login_password">
+            <i class="fa-solid fa-eye"></i>
           </button>
         </div>
-
         @error('password')
           <p class="text-red-400 text-xs mt-2 animate-pulse">{{ $message }}</p>
         @enderror
@@ -103,19 +86,19 @@
 
       <!-- Status -->
       <div class="flex items-center justify-between pt-6 pb-4" style="border-top:1px solid #333;">
-        <span class="flex items-center text-xs text-gray-400">
+        <span class="flex items-center text-xs text-gray-400 font-medium">
           <span class="inline-block w-2.5 h-2.5 bg-green-400 rounded-full mr-2 animate-pulse"></span>
           SYSTEM ONLINE
         </span>
 
-        <span class="text-xs text-gray-400" style="letter-spacing:1px;">
+        <span class="text-xs text-gray-400 font-rajdhani font-bold tracking-widest">
           LOGIN FOR USER
         </span>
       </div>
 
       <!-- CONNECT BUTTON -->
       <button type="submit"
-              class="w-full py-3.5 font-black text-sm uppercase tracking-widest transition-all duration-300"
+              class="w-full py-3.5 font-rajdhani font-extrabold text-sm uppercase tracking-widest transition-all duration-300"
               style="
                   border:2px solid #f97316;
                   color:#f97316;
@@ -129,11 +112,11 @@
 
       <!-- Register Link -->
       <div class="text-center">
-        <span class="text-xs text-gray-400">
+        <span class="text-xs text-gray-400 font-medium">
           Don't have an account?
           <button type="button"
                   onclick="closeModal('loginModalOverlay'); setTimeout(()=>openModal('registerModalOverlay'),220);"
-                  class="font-bold transition-colors"
+                  class="font-bold transition-colors uppercase tracking-wider text-[10px]"
                   style="color:#f97316;">
             REGISTER HERE
           </button>
@@ -143,7 +126,7 @@
 
     <!-- CLOSE BUTTON -->
     <button data-close="loginModalOverlay"
-            class="absolute top-5 right-5 text-gray-400 hover:text-orange-400 text-2xl">
+            class="absolute top-5 right-5 text-gray-400 hover:text-orange-400 text-2xl transition-colors">
       ×
     </button>
 
@@ -156,113 +139,121 @@
        role="dialog"
        aria-modal="true"
        style="
-          background: rgba(15, 23, 32, 0.7);
+          background: rgba(15, 23, 32, 0.95);
           backdrop-filter: blur(12px);
           border: 2px solid #f97316;
           border-radius: 12px;
           width: 100%;
-          max-width: 380px;
-          max-height: 95vh;
-          display: flex;
-          flex-direction: column;
+          max-width: 550px;
           box-shadow: 0 0 35px rgba(249, 115, 22, 0.35);
        ">
 
     <!-- Header Section -->
     <div class="px-6 py-5 flex-shrink-0">
-      <h2 class="text-2xl font-bold text-white text-center">Register Member</h2>
+      <h2 class="text-2xl font-bold text-white text-center font-rajdhani uppercase tracking-wider">Register Member</h2>
     </div>
 
     <!-- FORM - Scrollable Content -->
+    <!-- FORM -->
     <form id="registerForm" method="POST" action="{{ route('register') }}"
-          class="px-5 py-5 overflow-y-auto flex-1">
+          class="px-6 py-6">
       @csrf
-      <div class="space-y-3">
+      <div class="space-y-4">
 
-        <!-- Nama -->
-        <div class="group">
-          <label class="text-xs font-bold text-gray-400 uppercase block mb-2" style="letter-spacing:1px;">
-            Full Name <span class="text-red-500">*</span>
-          </label>
-          <input id="reg_name" type="text" name="name" value="{{ old('name') }}" required placeholder="Enter full name"
-                 class="w-full px-4 py-2.5 rounded-lg bg-white text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400 text-sm transition-all duration-300 hover:bg-gray-50">
-          @error('name')
-            <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
-          @enderror
-        </div>
+        <!-- Row 1: Name & Address -->
+        <div class="grid grid-cols-2 gap-4">
+            <!-- Nama -->
+            <div class="space-y-1">
+              <label class="text-label ml-1">Full Name <span class="text-red-500">*</span></label>
+              <div class="relative group">
+                <input id="reg_name" type="text" name="name" value="{{ old('name') }}" required placeholder="Enter name"
+                       class="block w-full px-3 py-2.5 bg-[#0b0e11]/90 border border-slate-700 rounded-lg text-sm text-gray-200 placeholder-slate-600 focus:border-orange-500 focus:ring-orange-500 font-rajdhani shadow-inner font-medium">
+              </div>
+              @error('name')
+                <p class="text-red-400 text-[10px] mt-1">{{ $message }}</p>
+              @enderror
+            </div>
 
-        <!-- Alamat -->
-        <div class="group">
-          <label class="text-xs font-bold text-gray-400 uppercase block mb-2" style="letter-spacing:1px;">
-            Address <span class="text-red-500">*</span>
-          </label>
-          <input id="reg_alamat" type="text" name="alamat" value="{{ old('alamat') }}" required placeholder="Enter address"
-                 class="w-full px-4 py-2.5 rounded-lg bg-white text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400 text-sm transition-all duration-300 hover:bg-gray-50">
-          @error('alamat')
-            <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
-          @enderror
+            <!-- Alamat -->
+            <div class="space-y-1">
+              <label class="text-label ml-1">Address <span class="text-red-500">*</span></label>
+              <div class="relative group">
+                <input id="reg_alamat" type="text" name="alamat" value="{{ old('alamat') }}" required placeholder="Enter address"
+                       class="block w-full px-3 py-2.5 bg-[#0b0e11]/90 border border-slate-700 rounded-lg text-sm text-gray-200 placeholder-slate-600 focus:border-orange-500 focus:ring-orange-500 font-rajdhani shadow-inner font-medium">
+              </div>
+              @error('alamat')
+                <p class="text-red-400 text-[10px] mt-1">{{ $message }}</p>
+              @enderror
+            </div>
         </div>
 
         <!-- Email -->
-        <div class="group">
-          <label class="text-xs font-bold text-gray-400 uppercase block mb-2" style="letter-spacing:1px;">
-            Email <span class="text-red-500">*</span>
-          </label>
-          <div class="relative">
-            <span class="absolute left-4 top-2.5 text-gray-600"><i class="fas fa-envelope text-sm"></i></span>
+        <div class="space-y-1">
+          <label class="text-label ml-1">Email <span class="text-red-500">*</span></label>
+          <div class="relative group">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="fa-solid fa-envelope text-slate-500"></i>
+            </div>
             <input id="reg_email" type="email" name="email" value="{{ old('email') }}" required placeholder="email@gmail.com"
-                   class="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400 text-sm transition-all duration-300 hover:bg-gray-50">
+                   class="block w-full pl-9 pr-3 py-2.5 bg-[#0b0e11]/90 border border-slate-700 rounded-lg text-sm text-gray-200 placeholder-slate-600 focus:border-orange-500 focus:ring-orange-500 font-rajdhani shadow-inner font-medium">
           </div>
           @error('email')
-            <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+            <p class="text-red-400 text-[10px] mt-1">{{ $message }}</p>
           @enderror
         </div>
 
-        <!-- Password -->
-        <div class="group">
-          <label class="text-xs font-bold text-gray-400 uppercase block mb-2" style="letter-spacing:1px;">
-            Passcode <span class="text-red-500">*</span>
-          </label>
-          <div class="relative">
-            <span class="absolute left-4 top-2.5 text-gray-600"><i class="fas fa-lock text-sm"></i></span>
-                 <input id="reg_password" type="password" name="password" required placeholder="Min 8 characters"
-                   class="w-full pl-10 pr-10 py-2.5 rounded-lg bg-white text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400 text-sm transition-all duration-300 hover:bg-gray-50">
-            <button type="button" class="absolute right-4 top-2.5 text-gray-600 hover:text-orange-400 text-sm transition-colors toggle-eye" data-target="reg_password">
-              <i class="fas fa-eye"></i>
-            </button>
-          </div>
-          @error('password')
-            <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
-          @enderror
-        </div>
+        <!-- Row 2: Passwords -->
+        <div class="grid grid-cols-2 gap-4">
+            <!-- Password -->
+            <div class="space-y-1">
+              <label class="text-label ml-1">Passcode <span class="text-red-500">*</span></label>
+              <div class="relative group">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <i class="fa-solid fa-lock text-slate-500"></i>
+                </div>
+                <input id="reg_password" type="password" name="password" required placeholder="Min 8 char"
+                       class="block w-full pl-9 pr-8 py-2.5 bg-[#0b0e11]/90 border border-slate-700 rounded-lg text-sm text-gray-200 placeholder-slate-600 focus:border-orange-500 focus:ring-orange-500 font-rajdhani shadow-inner font-medium">
+                <button type="button" 
+                        class="absolute inset-y-0 right-0 pr-2 text-slate-500 hover:text-orange-400 toggle-eye"
+                        data-target="reg_password">
+                  <i class="fa-solid fa-eye text-xs"></i>
+                </button>
+              </div>
+              @error('password')
+                <p class="text-red-400 text-[10px] mt-1">{{ $message }}</p>
+              @enderror
+            </div>
 
-        <!-- Confirm Password -->
-        <div class="group">
-          <label class="text-xs font-bold text-gray-400 uppercase block mb-2" style="letter-spacing:1px;">
-            Confirm <span class="text-red-500">*</span>
-          </label>
-          <div class="relative">
-            <span class="absolute left-4 top-2.5 text-gray-600"><i class="fas fa-lock text-sm"></i></span>
-                 <input id="reg_password_confirmation" type="password" name="password_confirmation" required placeholder="Repeat passcode"
-                   class="w-full pl-10 pr-10 py-2.5 rounded-lg bg-white text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400 text-sm transition-all duration-300 hover:bg-gray-50">
-            <button type="button" class="absolute right-4 top-2.5 text-gray-600 hover:text-orange-400 text-sm transition-colors toggle-eye" data-target="reg_password_confirmation">
-              <i class="fas fa-eye"></i>
-            </button>
-          </div>
+            <!-- Confirm Password -->
+            <div class="space-y-1">
+              <label class="text-label ml-1">Confirm <span class="text-red-500">*</span></label>
+              <div class="relative group">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <i class="fa-solid fa-lock text-slate-500"></i>
+                </div>
+                <input id="reg_password_confirmation" type="password" name="password_confirmation" required placeholder="Repeat"
+                       class="block w-full pl-9 pr-8 py-2.5 bg-[#0b0e11]/90 border border-slate-700 rounded-lg text-sm text-gray-200 placeholder-slate-600 focus:border-orange-500 focus:ring-orange-500 font-rajdhani shadow-inner font-medium">
+                <button type="button" 
+                        class="absolute inset-y-0 right-0 pr-2 text-slate-500 hover:text-orange-400 toggle-eye"
+                        data-target="reg_password_confirmation">
+                  <i class="fa-solid fa-eye text-xs"></i>
+                </button>
+              </div>
+            </div>
         </div>
 
         <!-- Status -->
         <div class="flex items-center justify-between pt-3 pb-2" style="border-top:1px solid #333;">
-          <span class="flex items-center text-xs text-gray-400">
+          <span class="flex items-center text-xs text-gray-400 font-medium">
             <span class="inline-block w-2.5 h-2.5 bg-green-400 rounded-full mr-2 animate-pulse"></span>
             SYSTEM ONLINE
           </span>
-          <span class="text-xs text-gray-400" style="letter-spacing:0.5px;">REGISTER</span>
+          <span class="text-xs text-gray-400 font-rajdhani font-bold tracking-widest text-label">REGISTER</span>
         </div>
 
         <!-- REGISTER BUTTON -->
         <button type="submit"
-                class="w-full py-3 font-black text-sm uppercase tracking-widest transition-all duration-300"
+                class="w-full py-3 font-rajdhani font-extrabold text-sm uppercase tracking-widest transition-all duration-300"
                 style="
                     border:2px solid #f97316;
                     color:#f97316;
@@ -276,11 +267,11 @@
 
         <!-- Register Link -->
         <div class="text-center pb-2">
-          <span class="text-xs text-gray-400">
+          <span class="text-xs text-gray-400 font-medium">
             Already have an account?
             <button type="button"
                     onclick="closeModal('registerModalOverlay'); setTimeout(()=>openModal('loginModalOverlay'),220);"
-                    class="font-bold transition-colors"
+                    class="font-bold transition-colors uppercase tracking-wider text-[10px]"
                     style="color:#f97316;">
               LOGIN HERE
             </button>
@@ -354,6 +345,42 @@
 
 /* small helper for eye button */
 .toggle-eye { background: transparent; border: none; cursor: pointer; }
+
+/* SweetAlert2 Dark Theme Overrides */
+div:where(.swal2-container) div:where(.swal2-popup) {
+  background: #0b0e11 !important; /* Darkest bg */
+  border: 1px solid #334155;
+  border-left: 4px solid #f97316; /* Orange accent */
+  border-radius: 12px !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+}
+
+div:where(.swal2-container) h2:where(.swal2-title) {
+  color: #fff !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+div:where(.swal2-container) div:where(.swal2-html-container) {
+  color: #94a3b8 !important; /* Text slate-400 */
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 500;
+}
+
+/* Fix Icon Borders/Colors in dark mode */
+div:where(.swal2-icon) {
+  border-color: #334155 !important;
+}
+div:where(.swal2-icon).swal2-error {
+  border-color: #ef4444 !important;
+  color: #ef4444 !important;
+}
+div:where(.swal2-icon).swal2-success {
+  border-color: #22c55e !important;
+  color: #22c55e !important;
+}
 </style>
 
 <script>
@@ -526,7 +553,7 @@ document.addEventListener('DOMContentLoaded', function() {
         title: 'Login Failed',
         text: loginError,
         confirmButtonColor: '#f97316',
-        confirmButtonText: 'Coba Lagi'
+        confirmButtonText: 'Try Again'
       }).then(() => {
         openModal('loginModalOverlay');
       });
@@ -537,10 +564,10 @@ document.addEventListener('DOMContentLoaded', function() {
   @if (session()->has('success') && !$errors->any())
     Swal.fire({
       icon: 'success',
-      title: 'Login Successful',
+      title: 'Success',
       text: '{{ session("success") }}',
       confirmButtonColor: '#f97316',
-      confirmButtonText: 'Lanjut',
+      confirmButtonText: 'Continue',
       timer: 2000
     });
   @endif
@@ -554,7 +581,7 @@ document.addEventListener('DOMContentLoaded', function() {
         title: 'Validation Failed',
         html: '<ul style="text-align: left;">' + errors.map(e => '<li>' + e + '</li>').join('') + '</ul>',
         confirmButtonColor: '#f97316',
-        confirmButtonText: 'Coba Lagi'
+        confirmButtonText: 'Try Again'
       }).then(() => {
         openModal('registerModalOverlay');
       });
@@ -568,7 +595,7 @@ document.addEventListener('DOMContentLoaded', function() {
       title: 'Registration Successful!',
       text: '{{ session("register_success") }}',
       confirmButtonColor: '#f97316',
-      confirmButtonText: 'Login Sekarang',
+      confirmButtonText: 'Login Now',
       timer: 3000
     }).then(() => {
       closeModal('registerModalOverlay');
