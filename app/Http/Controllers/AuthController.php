@@ -46,7 +46,7 @@ class AuthController extends Controller
                     return redirect()->route('admin.dashboard');
                 } else {
                     // redirect regular users to the new Trade page after login
-                    return redirect()->route('user.trade');
+                    return redirect()->route('user.catalog');
                 }
             }
         }
@@ -92,9 +92,12 @@ class AuthController extends Controller
         $validated['is_active'] = 1; // Default active
         $validated['role_id'] = 2; // Default role user biasa
 
-        User::create($validated);
+        $user = User::create($validated);
 
-        return redirect('/login')->with('success', 'Registration successful. Please log in.');
+        // Auto-login setelah registrasi
+        Auth::login($user);
+
+        return redirect()->route('user.trade')->with('success', 'Registration successful. Welcome to your dashboard!');
     }
 
     public function logout(Request $request)
