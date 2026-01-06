@@ -26,20 +26,26 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::get('/catalog', [CatalogController::class, 'index'])->name('index');
     // Public pages
     // Protected user-only pages
-    Route::middleware(['auth', 'isUser'])->group(function(){
+    Route::middleware(['auth', 'isUser'])->group(function () {
         // Store page
         Route::get('/store', [StoreController::class, 'index'])->name('store');
-        
+        Route::get('/checkout', [StoreController::class, 'checkout'])->name('checkout');
+        Route::post('/store/buy', [StoreController::class, 'buy'])->name('store.buy');
+
+        // Sell page
+        Route::get('/selluser', [StoreController::class, 'selluser'])->name('selluser');
+        Route::post('/sell', [StoreController::class, 'sell'])->name('sell');
+
         // Trade page
         Route::get('/trade', [TradeController::class, 'index'])->name('trade');
         Route::get('/trade/refresh', [TradeController::class, 'refresh'])->name('trade.refresh');
         Route::post('/trade', [TradeController::class, 'process'])->name('trade.process');
-        
+
         // Profile
         Route::get('/profil', [App\Http\Controllers\User\UserProfileController::class, 'show'])->name('profil');
         Route::put('/profil', [App\Http\Controllers\User\UserProfileController::class, 'update'])->name('profil.update');
         Route::post('/profil/inventory', [App\Http\Controllers\User\UserProfileController::class, 'storeInventory'])->name('profil.inventory.store');
-        
+
         // Change Password
         Route::get('/change-password', [App\Http\Controllers\User\UserProfileController::class, 'editPassword'])->name('change-password');
         Route::put('/change-password', [App\Http\Controllers\User\UserProfileController::class, 'updatePassword'])->name('change-password.update');

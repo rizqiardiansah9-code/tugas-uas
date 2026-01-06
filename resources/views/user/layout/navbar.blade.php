@@ -16,8 +16,8 @@
                 class="text-sm font-bold uppercase tracking-wider transition-colors {{ Route::is('user.trade') ? 'text-white' : 'text-gray-400 hover:text-white' }}">Trade</a>
             <a href="{{ route('user.store') }}"
                 class="text-sm font-bold uppercase tracking-wider transition-colors {{ Route::is('user.store') ? 'text-white' : 'text-gray-400 hover:text-white' }}">Store</a>
-            <a href="#"
-                class="text-sm font-bold uppercase tracking-wider transition-colors text-gray-400 hover:text-white">Sell</a>
+            <a href="{{ route('user.selluser') }}"
+                class="text-sm font-bold uppercase tracking-wider transition-colors {{ Route::is('user.selluser') ? 'text-white' : 'text-gray-400 hover:text-white' }}">Sell</a>
         </div>
 
     @endauth
@@ -30,7 +30,7 @@
                     class="flex items-center gap-3 focus:outline-none">
                     <div class="text-right hidden md:block">
                         <p class="text-sm font-semibold text-white">{{ Auth::user()->nama ?? Auth::user()->name }}</p>
-                        <p class="text-xs text-app-muted">User</p>
+                        <p class="text-xs text-[#22c55e] font-mono">$ {{ number_format(Auth::user()->balance, 2) }}</p>
                     </div>
                     <img src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : asset('assets/images/default-avatar.png') }}"
                         class="h-9 w-9 rounded-full object-cover border-2 border-app-border transition-colors"
@@ -45,7 +45,7 @@
 
                     <div class="px-4 py-2 border-b border-white/5 mb-2 md:hidden">
                         <p class="text-white font-bold">{{ Auth::user()->nama ?? Auth::user()->name }}</p>
-                        <p class="text-xs text-[#22c55e] font-mono">$ 0.00</p>
+                        <p class="text-xs text-[#22c55e] font-mono">$ {{ number_format(Auth::user()->balance, 2) }}</p>
                     </div>
 
                     <a href="{{ route('user.profil') }}"

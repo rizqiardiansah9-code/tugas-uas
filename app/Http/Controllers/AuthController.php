@@ -45,8 +45,8 @@ class AuthController extends Controller
                 if ($user->role_id == 1) {
                     return redirect()->route('admin.dashboard');
                 } else {
-                    // redirect regular users to the new Trade page after login
-                    return redirect()->route('user.catalog');
+                    // redirect regular users to the catalog page after login
+                    return redirect()->route('user.index');
                 }
             }
         }

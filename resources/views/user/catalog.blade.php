@@ -378,21 +378,45 @@
                         <!-- Content will be duplicated by JS for seamless loop -->
                         @isset($items)
                             @forelse($items as $item)
+                                @php
+                                    $rKey = data_get($item, 'metadata.rarity', 'common');
+                                    $rarityColor = match ($rKey) {
+                                        'uncommon' => '#16a34a',
+                                        'rare' => '#3b82f6',
+                                        'mythical' => '#7c3aed',
+                                        'legendary' => '#f59e0b',
+                                        'ancient' => '#3730a3',
+                                        'exceedingly_rare' => '#db2777',
+                                        'immortal' => '#dc2626',
+                                        default => '#6b7280',
+                                    };
+                                    $rText = in_array($rKey, ['legendary']) ? '#000' : '#fff';
+                                    $rarityText = ucfirst($rKey);
+                                @endphp
                                 <div class="catalog-col flex-shrink-0" style="flex: 0 0 220px; width: 220px; height: 320px;"
                                     data-category="{{ $item->category->name ?? 'Umum' }}">
                                     <div class="item-cell">
-                                        <div class="item-details" data-item-title="{{ $item->name }}"
+                                        <div class="item-details relative" data-item-title="{{ $item->name }}"
                                             data-item-desc="{{ Str::limit($item->description ?? '', 500) }}"
                                             data-item-price="{{ $item->price ?? '-' }}"
                                             data-item-image="{{ !empty($item->image) ? asset('storage/' . $item->image) : 'https://via.placeholder.com/300x200?text=No+Image' }}"
-                                            data-category="{{ $item->category->name ?? 'Umum' }}"
-                                            onclick="showItemModal(this)">
+                                            data-category="{{ $item->category->name ?? 'Umum' }}" onclick="showItemModal(this)"
+                                            style="box-shadow: 0 8px 24px {{ $rarityColor }}33; border-color: {{ $rarityColor }}22;">
+
+                                            <!-- Rarity badge overlay -->
+                                            <div class="absolute left-2 -top-1 z-30">
+                                                <span class="text-xs font-semibold px-2 py-0.5 rounded"
+                                                    style="background: {{ $rarityColor }}; color: {{ $rText }}; box-shadow: 0 6px 16px {{ $rarityColor }}33;">
+                                                    {{ $rarityText }}
+                                                </span>
+                                            </div>
 
                                             @if (!empty($item->image))
                                                 <img class="item-image" src="{{ asset('storage/' . $item->image) }}"
                                                     alt="{{ $item->name }}">
                                             @else
-                                                <img class="item-image" src="https://via.placeholder.com/300x200?text=No+Image"
+                                                <img class="item-image"
+                                                    src="https://via.placeholder.com/300x200?text=No+Image"
                                                     alt="{{ $item->name }}">
                                             @endif
 
@@ -423,46 +447,6 @@
                             @endforelse
                         @else
                             <!-- Sample Loop kept for fallback/dev -->
-                            @php
-                                $samples = [
-                                    [
-                                        'name' => 'Premium Leather Jacket',
-                                        'price' => 450000,
-                                        'category' => 'Clothing',
-                                        'img' => 'https://via.placeholder.com/300x200?text=Jacket',
-                                    ],
-                                    [
-                                        'name' => 'Classic Backpack',
-                                        'price' => 280000,
-                                        'category' => 'Accessories',
-                                        'img' => 'https://via.placeholder.com/300x200?text=Backpack',
-                                    ],
-                                    [
-                                        'name' => 'Running Shoes',
-                                        'price' => 650000,
-                                        'category' => 'Footwear',
-                                        'img' => 'https://via.placeholder.com/300x200?text=Shoes',
-                                    ],
-                                    [
-                                        'name' => 'Cotton T-Shirt',
-                                        'price' => 120000,
-                                        'category' => 'Clothing',
-                                        'img' => 'https://via.placeholder.com/300x200?text=TShirt',
-                                    ],
-                                    [
-                                        'name' => 'Denim Jeans',
-                                        'price' => 350000,
-                                        'category' => 'Clothing',
-                                        'img' => 'https://via.placeholder.com/300x200?text=Jeans',
-                                    ],
-                                    [
-                                        'name' => 'Sports Watch',
-                                        'price' => 900000,
-                                        'category' => 'Accessories',
-                                        'img' => 'https://via.placeholder.com/300x200?text=Watch',
-                                    ],
-                                ];
-                            @endphp
                             @foreach ($samples as $s)
                                 <div class="catalog-col flex-shrink-0" style="flex: 0 0 220px; width: 220px; height: 320px;"
                                     data-category="{{ $s['category'] }}">
