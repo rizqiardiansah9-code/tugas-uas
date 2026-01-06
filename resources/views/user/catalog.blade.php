@@ -4,183 +4,199 @@
 
 @section('content')
     <div x-data="{ selectedCategory: 'all' }" x-cloak class="w-full">
-<style>
-:root{
-  --bg:#0e1015; --card:#151823; --card-inner:#1c202e;
-  --primary:#4c6fff; --gray:#aab0d5;
-}
+        <style>
+            :root {
+                --bg: #0e1015;
+                --card: #151823;
+                --card-inner: #1c202e;
+                --primary: #4c6fff;
+                --gray: #aab0d5;
+            }
 
-/* GRID */
-.catalog-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(175px,1fr));
-  gap:12px;
-  /* padding:16px; removed padding to fit layout */
-}
+            /* GRID */
+            .catalog-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+                gap: 12px;
+                /* padding:16px; removed padding to fit layout */
+            }
 
-/* CARD SIZE */
-.catalog-col{
-  /* width:175px; removed fixed width to allow fluid grid */
-  height:206px;
-}
+            /* CARD SIZE */
+            .catalog-col {
+                /* width:175px; removed fixed width to allow fluid grid */
+                height: 206px;
+            }
 
-/* CARD */
-.item-cell{
-  width:100%;
-  height:100%;
-  background:var(--card);
-  border-radius:0;
-  overflow:hidden;
-}
+            /* CARD */
+            .item-cell {
+                width: 100%;
+                height: 100%;
+                background: var(--card);
+                border-radius: 0;
+                overflow: hidden;
+            }
 
-.item-details{
-  position:relative;
-  height:100%;
-  padding:12px;
-  background:var(--card-inner);
-  overflow:hidden;
-  cursor:pointer;
-}
+            .item-details {
+                position: relative;
+                height: 100%;
+                padding: 12px;
+                background: var(--card-inner);
+                overflow: hidden;
+                cursor: pointer;
+            }
 
-/* COUNT */
-.count{
-  position:absolute;
-  top:10px;
-  right:10px;
-  font-size:13px;
-  color:#7fa2ff;
-  z-index:3;
-}
+            /* COUNT */
+            .count {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                font-size: 13px;
+                color: #7fa2ff;
+                z-index: 3;
+            }
 
-/* IMAGE */
-.item-image{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  padding: 20px;
-  transition:.35s cubic-bezier(.2,.8,.2,1);
-}
+            /* IMAGE */
+            .item-image {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                padding: 20px;
+                transition: .35s cubic-bezier(.2, .8, .2, 1);
+            }
 
-/* TEXT */
-.indicators{
-  position:absolute;
-  left:12px;
-  right:12px;
-  bottom:12px;
-  transition:.35s cubic-bezier(.2,.8,.2,1);
-}
+            /* TEXT */
+            .indicators {
+                position: absolute;
+                left: 12px;
+                right: 12px;
+                bottom: 12px;
+                transition: .35s cubic-bezier(.2, .8, .2, 1);
+            }
 
-.item-name{
-  font-size:12px;
-  font-weight:600;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  color: #7d859e;
-}
+            .item-name {
+                font-size: 12px;
+                font-weight: 600;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                color: #7d859e;
+            }
 
-.price{
-  font-size:13px;
-  font-weight:700;
-  margin-top:2px;
-  color: #22c55e;
-}
+            .price {
+                font-size: 13px;
+                font-weight: 700;
+                margin-top: 2px;
+                color: #22c55e;
+            }
 
-/* BUTTONS */
-.buttons{
-  position:absolute;
-  left:12px;
-  right:12px;
-  bottom:12px;
-  opacity:0;
-  transform:translateY(100%);
-  transition:.35s cubic-bezier(.2,.8,.2,1);
-}
+            /* BUTTONS */
+            .buttons {
+                position: absolute;
+                left: 12px;
+                right: 12px;
+                bottom: 12px;
+                opacity: 0;
+                transform: translateY(100%);
+                transition: .35s cubic-bezier(.2, .8, .2, 1);
+            }
 
-.btn-wrap{
-  display:flex;
-  height:30px;
-  border-radius:8px;
-  overflow:hidden;
-}
+            .btn-wrap {
+                display: flex;
+                height: 30px;
+                border-radius: 8px;
+                overflow: hidden;
+            }
 
-.btn-unstack{
-  flex:1;
-  background:var(--primary);
-  border:0;
-  color:#fff;
-  font-size:12px;
-  font-weight:600;
-  cursor:pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  transition: all 0.2s ease;
-}
+            .btn-unstack {
+                flex: 1;
+                background: var(--primary);
+                border: 0;
+                color: #fff;
+                font-size: 12px;
+                font-weight: 600;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 4px;
+                transition: all 0.2s ease;
+            }
 
-.btn-unstack:hover {
-  filter: brightness(1.1);
-  box-shadow: 0 4px 12px rgba(76, 111, 255, 0.4);
-}
+            .btn-unstack:hover {
+                filter: brightness(1.1);
+                box-shadow: 0 4px 12px rgba(76, 111, 255, 0.4);
+            }
 
-.btn-unstack:active {
-  box-shadow: none;
-}
+            .btn-unstack:active {
+                box-shadow: none;
+            }
 
-.btn-more{
-  width:30px;
-  background:#5b6dff;
-  border:0;
-  color:#fff;
-  font-size:16px;
-  cursor:pointer;
-  transition: all 0.2s ease;
-}
+            .btn-more {
+                width: 30px;
+                background: #5b6dff;
+                border: 0;
+                color: #fff;
+                font-size: 16px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
 
-.btn-more:hover {
-  filter: brightness(1.1);
-  box-shadow: 0 4px 12px rgba(91, 109, 255, 0.4);
-}
+            .btn-more:hover {
+                filter: brightness(1.1);
+                box-shadow: 0 4px 12px rgba(91, 109, 255, 0.4);
+            }
 
-.btn-more:active {
-  box-shadow: none;
-}
+            .btn-more:active {
+                box-shadow: none;
+            }
 
-/* HOVER */
-.item-details:hover .item-image{
-  transform:translateY(-8px) scale(.92);
-}
+            /* HOVER */
+            .item-details:hover .item-image {
+                transform: translateY(-8px) scale(.92);
+            }
 
-.item-details:hover .indicators{
-  transform:translateY(-36px);
-}
+            .item-details:hover .indicators {
+                transform: translateY(-36px);
+            }
 
-.item-details:hover .buttons{
-  opacity:1;
-  transform:translateY(0);
-}
-/* HIDE SCROLLBAR */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-/* MARQUEE ANIMATION */
-@keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-.animate-marquee {
-    width: max-content; /* Force width to fit content for scrolling */
-    animation: marquee 40s linear infinite;
-}
-.animate-marquee:hover {
-    animation-play-state: paused;
-}
-</style>
+            .item-details:hover .buttons {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* HIDE SCROLLBAR */
+            .no-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+
+            .no-scrollbar {
+                -ms-overflow-style: none;
+                /* IE and Edge */
+                scrollbar-width: none;
+                /* Firefox */
+            }
+
+            /* MARQUEE ANIMATION */
+            @keyframes marquee {
+                0% {
+                    transform: translateX(0);
+                }
+
+                100% {
+                    transform: translateX(-50%);
+                }
+            }
+
+            .animate-marquee {
+                width: max-content;
+                /* Force width to fit content for scrolling */
+                animation: marquee 40s linear infinite;
+            }
+
+            .animate-marquee:hover {
+                animation-play-state: paused;
+            }
+        </style>
         <!-- Hero Section - TradeIt Style - Full Width -->
         <div class="relative overflow-hidden mb-0 -mx-6 px-6 w-screen left-1/2 right-1/2 ml-[-50vw] mr-[-50vw]">
             <!-- ... (hero content skipped) ... -->
@@ -210,7 +226,8 @@
 
                     <!-- CTA Button -->
                     <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-                        <button onclick="openModal('loginModalOverlay')" class="navbar-btn px-5 py-2.5 text-base">Sign In</button>
+                        <button onclick="openModal('loginModalOverlay')" class="navbar-btn px-5 py-2.5 text-base">Sign
+                            In</button>
                         <span class="text-white text-sm app-text-muted">
                             <i class="fas fa-gift mr-2 text-orange-500"></i>Start now for a bonus
                         </span>
@@ -222,8 +239,7 @@
                     <div class="absolute inset-0 flex items-center justify-center">
                         <div class="relative w-96 h-96">
                             <!-- Specialist Gloves - Field Agent: smaller, thicker border, subtle glow -->
-                            <div class="absolute top-4 right-8  overflow-visible"
-                                style="width:14rem;height:9rem;">
+                            <div class="absolute top-4 right-8  overflow-visible" style="width:14rem;height:9rem;">
                                 <div class="absolute -inset-6  pointer-events-none"
                                     style="background: radial-gradient(closest-side, rgba(249,115,22,0.18), transparent 70%); filter: blur(22px);">
                                 </div>
@@ -233,7 +249,8 @@
                                         alt="Specialist Gloves Field Agent" class="w-full h-full object-cover">
                                 </div>
                             </div>
-                            <!-- M4A1-S Hot Rod: reduced size, lifted and rotated -->                            <div class="absolute top-52 left-6  overflow-visible transform -rotate-6"
+                            <!-- M4A1-S Hot Rod: reduced size, lifted and rotated -->
+                            <div class="absolute top-52 left-6  overflow-visible transform -rotate-6"
                                 style="width:12rem;height:7.5rem;">
                                 <div class="absolute -inset-5  pointer-events-none"
                                     style="background: radial-gradient(closest-side, rgba(249,115,22,0.15), transparent 70%); filter: blur(18px);">
@@ -312,21 +329,32 @@
         <div class="px-6">
             <!-- Category Buttons (Modern Style) -->
             <div class="mb-8 mt-12 flex justify-center">
-                <div class="inline-flex flex-wrap justify-center gap-3 p-1.5 bg-black/20 backdrop-blur-sm  border border-white/5">
-                    <button class="category-filter relative px-6 py-2.5  font-bold text-sm transition-all duration-300 overflow-hidden group active"
+                <div
+                    class="inline-flex flex-wrap justify-center gap-3 p-1.5 bg-black/20 backdrop-blur-sm  border border-white/5">
+                    <button
+                        class="category-filter relative px-6 py-2.5  font-bold text-sm transition-all duration-300 overflow-hidden group active"
                         data-category="all">
-                        <span class="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-500 opacity-0 group-[.active]:opacity-100 transition-opacity duration-300"></span>
-                        <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <span class="relative z-10 group-[.active]:text-white text-gray-400 group-hover:text-white">All Items</span>
+                        <span
+                            class="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-500 opacity-0 group-[.active]:opacity-100 transition-opacity duration-300"></span>
+                        <div
+                            class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        </div>
+                        <span class="relative z-10 group-[.active]:text-white text-gray-400 group-hover:text-white">All
+                            Items</span>
                     </button>
 
-                    @foreach(['Guns', 'Gloves', 'Knifes', 'Stickers'] as $cat)
-                    <button class="category-filter relative px-6 py-2.5  font-bold text-sm transition-all duration-300 overflow-hidden group"
-                        data-category="{{ $cat }}">
-                        <span class="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-500 opacity-0 group-[.active]:opacity-100 transition-opacity duration-300"></span>
-                        <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <span class="relative z-10 group-[.active]:text-white text-gray-400 group-hover:text-white">{{ $cat }}</span>
-                    </button>
+                    @foreach (['Guns', 'Gloves', 'Knifes', 'Stickers'] as $cat)
+                        <button
+                            class="category-filter relative px-6 py-2.5  font-bold text-sm transition-all duration-300 overflow-hidden group"
+                            data-category="{{ $cat }}">
+                            <span
+                                class="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-500 opacity-0 group-[.active]:opacity-100 transition-opacity duration-300"></span>
+                            <div
+                                class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            </div>
+                            <span
+                                class="relative z-10 group-[.active]:text-white text-gray-400 group-hover:text-white">{{ $cat }}</span>
+                        </button>
                     @endforeach
                 </div>
             </div>
@@ -337,38 +365,74 @@
             <div class="relative group overflow-hidden">
                 <!-- Wrapper for marquee to strictly hide overflow -->
                 <div class="w-full overflow-hidden relative">
-                     <!-- Gradient Overlays for smooth entry/exit -->
-                    <div class="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#0e1015] to-transparent z-20 pointer-events-none"></div>
-                    <div class="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#0e1015] to-transparent z-20 pointer-events-none"></div>
-                    
+                    <!-- Gradient Overlays for smooth entry/exit -->
+                    <div
+                        class="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#0e1015] to-transparent z-20 pointer-events-none">
+                    </div>
+                    <div
+                        class="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#0e1015] to-transparent z-20 pointer-events-none">
+                    </div>
+
                     <!-- Track -->
                     <div id="marqueeTrack" class="flex gap-6 animate-marquee py-8 px-4">
                         <!-- Content will be duplicated by JS for seamless loop -->
                         @isset($items)
                             @forelse($items as $item)
-                                <div class="catalog-col flex-shrink-0" style="flex: 0 0 220px; width: 220px; height: 320px;" data-category="{{ $item->category->name ?? 'Umum' }}">
+                                @php
+                                    $rKey = data_get($item, 'metadata.rarity', 'common');
+                                    $rarityColor = match ($rKey) {
+                                        'uncommon' => '#16a34a',
+                                        'rare' => '#3b82f6',
+                                        'mythical' => '#7c3aed',
+                                        'legendary' => '#f59e0b',
+                                        'ancient' => '#3730a3',
+                                        'exceedingly_rare' => '#db2777',
+                                        'immortal' => '#dc2626',
+                                        default => '#6b7280',
+                                    };
+                                    $rText = in_array($rKey, ['legendary']) ? '#000' : '#fff';
+                                    $rarityText = ucfirst($rKey);
+                                @endphp
+                                <div class="catalog-col flex-shrink-0" style="flex: 0 0 220px; width: 220px; height: 320px;"
+                                    data-category="{{ $item->category->name ?? 'Umum' }}">
                                     <div class="item-cell">
-                                        <div class="item-details"
-                                            data-item-title="{{ $item->name }}"
+                                        <div class="item-details relative" data-item-title="{{ $item->name }}"
                                             data-item-desc="{{ Str::limit($item->description ?? '', 500) }}"
                                             data-item-price="{{ $item->price ?? '-' }}"
                                             data-item-image="{{ !empty($item->image) ? asset('storage/' . $item->image) : 'https://via.placeholder.com/300x200?text=No+Image' }}"
-                                            data-category="{{ $item->category->name ?? 'Umum' }}" onclick="showItemModal(this)">
+                                            data-category="{{ $item->category->name ?? 'Umum' }}" onclick="showItemModal(this)"
+                                            style="box-shadow: 0 8px 24px {{ $rarityColor }}33; border-color: {{ $rarityColor }}22;">
+
+                                            <!-- Rarity badge overlay -->
+                                            <div class="absolute left-2 -top-1 z-30">
+                                                <span class="text-xs font-semibold px-2 py-0.5 rounded"
+                                                    style="background: {{ $rarityColor }}; color: {{ $rText }}; box-shadow: 0 6px 16px {{ $rarityColor }}33;">
+                                                    {{ $rarityText }}
+                                                </span>
+                                            </div>
 
                                             @if (!empty($item->image))
-                                                <img class="item-image" src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}">
+                                                <img class="item-image" src="{{ asset('storage/' . $item->image) }}"
+                                                    alt="{{ $item->name }}">
                                             @else
-                                                <img class="item-image" src="https://via.placeholder.com/300x200?text=No+Image" alt="{{ $item->name }}">
+                                                <img class="item-image"
+                                                    src="https://via.placeholder.com/300x200?text=No+Image"
+                                                    alt="{{ $item->name }}">
                                             @endif
-                                            
+
                                             <div class="indicators">
-                                                <div class="item-name font-bold text-sm text-gray-200 tracking-tight">{{ $item->name }}</div>
-                                                <div class="price font-rajdhani font-bold text-lg text-[#f97316]">${{ number_format($item->price, 2) }}</div>
+                                                <div class="item-name font-bold text-sm text-gray-200 tracking-tight">
+                                                    {{ $item->name }}</div>
+                                                <div class="price font-rajdhani font-bold text-lg text-[#f97316]">
+                                                    ${{ number_format($item->price, 2) }}</div>
                                             </div>
-                                            
+
                                             <div class="buttons">
                                                 <div class="btn-wrap">
-                                                <button class="btn-unstack font-rajdhani font-bold uppercase tracking-wider" onclick="@auth window.location.href='{{ route('user.trade') }}' @else openModal('loginModalOverlay') @endauth"><i class="fas fa-shopping-cart"></i> Cart</button>
+                                                    <button
+                                                        class="btn-unstack font-rajdhani font-bold uppercase tracking-wider"
+                                                        onclick="@auth window.location.href='{{ route('user.trade') }}' @else openModal('loginModalOverlay') @endauth"><i
+                                                            class="fas fa-shopping-cart"></i> Cart</button>
                                                     <button class="btn-more">⋮</button>
                                                 </div>
                                             </div>
@@ -383,20 +447,13 @@
                             @endforelse
                         @else
                             <!-- Sample Loop kept for fallback/dev -->
-                            @php
-                            $samples = [
-                                ['name' => 'Premium Leather Jacket', 'price' => 450000, 'category' => 'Clothing', 'img' => 'https://via.placeholder.com/300x200?text=Jacket'],
-                                ['name' => 'Classic Backpack', 'price' => 280000, 'category' => 'Accessories', 'img' => 'https://via.placeholder.com/300x200?text=Backpack'],
-                                ['name' => 'Running Shoes', 'price' => 650000, 'category' => 'Footwear', 'img' => 'https://via.placeholder.com/300x200?text=Shoes'],
-                                ['name' => 'Cotton T-Shirt', 'price' => 120000, 'category' => 'Clothing', 'img' => 'https://via.placeholder.com/300x200?text=TShirt'],
-                                ['name' => 'Denim Jeans', 'price' => 350000, 'category' => 'Clothing', 'img' => 'https://via.placeholder.com/300x200?text=Jeans'],
-                                ['name' => 'Sports Watch', 'price' => 900000, 'category' => 'Accessories', 'img' => 'https://via.placeholder.com/300x200?text=Watch'],
-                            ];
-                            @endphp
                             @foreach ($samples as $s)
-                                <div class="catalog-col flex-shrink-0" style="flex: 0 0 220px; width: 220px; height: 320px;" data-category="{{ $s['category'] }}">
+                                <div class="catalog-col flex-shrink-0" style="flex: 0 0 220px; width: 220px; height: 320px;"
+                                    data-category="{{ $s['category'] }}">
                                     <div class="item-cell">
-                                        <div class="item-details" data-item-title="{{ $s['name'] }}" data-item-price="{{ $s['price'] }}" data-item-image="{{ $s['img'] }}" data-category="{{ $s['category'] }}" onclick="showItemModal(this)">
+                                        <div class="item-details" data-item-title="{{ $s['name'] }}"
+                                            data-item-price="{{ $s['price'] }}" data-item-image="{{ $s['img'] }}"
+                                            data-category="{{ $s['category'] }}" onclick="showItemModal(this)">
                                             <div class="count">x{{ rand(1, 50) }}</div>
                                             <img class="item-image" src="{{ $s['img'] }}" alt="{{ $s['name'] }}">
                                             <div class="indicators">
@@ -405,7 +462,9 @@
                                             </div>
                                             <div class="buttons">
                                                 <div class="btn-wrap">
-                                                    <button class="btn-unstack" onclick="@auth window.location.href='{{ route('user.trade') }}' @else openModal('loginModalOverlay') @endauth"><i class="fas fa-shopping-cart"></i> Cart</button>
+                                                    <button class="btn-unstack"
+                                                        onclick="@auth window.location.href='{{ route('user.trade') }}' @else openModal('loginModalOverlay') @endauth"><i
+                                                            class="fas fa-shopping-cart"></i> Cart</button>
                                                     <button class="btn-more">⋮</button>
                                                 </div>
                                             </div>
@@ -422,11 +481,11 @@
         <script>
             document.addEventListener('DOMContentLoaded', () => {
                 const track = document.getElementById('marqueeTrack');
-                
+
                 // Initial Clone Logic
-                if(track) {
+                if (track) {
                     const children = Array.from(track.children); // Get original items
-                    if(children.length > 0) {
+                    if (children.length > 0) {
                         // Clone once to ensure we have enough content for the loop setup
                         // We mark clones so we can control them or identify them if needed
                         children.forEach(child => {
@@ -435,7 +494,7 @@
                             track.appendChild(clone);
                         });
                     }
-                    
+
                     // Initial check
                     checkAnimationState('all');
                 }
@@ -445,7 +504,7 @@
             document.querySelectorAll('.category-filter').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const category = this.dataset.category;
-                    
+
                     // Update Active State
                     document.querySelectorAll('.category-filter').forEach(b => {
                         b.classList.remove('active');
@@ -459,7 +518,7 @@
 
             function checkAnimationState(category) {
                 const track = document.getElementById('marqueeTrack');
-                if(!track) return;
+                if (!track) return;
 
                 const cards = track.querySelectorAll('.catalog-col');
                 let visibleCount = 0;
@@ -467,16 +526,16 @@
 
                 // 1. First Pass: Show/Hide items based on category
                 cards.forEach(card => {
-                    const cardCategory = card.dataset.category; 
-                    if(!cardCategory) return;
-                    
+                    const cardCategory = card.dataset.category;
+                    if (!cardCategory) return;
+
                     const match = (category === 'all' || cardCategory.toLowerCase() === category.toLowerCase());
-                    
-                    if(match) {
+
+                    if (match) {
                         card.style.display = 'block';
                         visibleCount++;
-                        if(!card.classList.contains('is-clone')) {
-                             visibleOriginals++;
+                        if (!card.classList.contains('is-clone')) {
+                            visibleOriginals++;
                         }
                     } else {
                         card.style.display = 'none';
@@ -512,16 +571,16 @@
                 // If few items (e.g. <= 4), disable animation to prevent awkward loops with gaps
                 // or if they fit within screen width.
                 // NOTE: 'visibleCount' includes clones. 'visibleOriginals' is the real count.
-                
+
                 // Logic: If we have enough originals to justify scrolling?
                 // Let's say if we have fewer than 5 items, we just center them and kill animation.
-                
+
                 if (visibleOriginals > 0 && visibleOriginals < 5) {
                     track.classList.remove('animate-marquee');
                     track.classList.add('justify-center'); // Center items if static
                     // Also need to hide clones to avoid duplicate display in static mode
-                     cards.forEach(card => {
-                        if(card.classList.contains('is-clone')) {
+                    cards.forEach(card => {
+                        if (card.classList.contains('is-clone')) {
                             card.style.display = 'none';
                         }
                     });
@@ -531,7 +590,7 @@
                     cards.forEach(card => {
                         const cardCategory = card.dataset.category;
                         const match = (category === 'all' || cardCategory.toLowerCase() === category.toLowerCase());
-                        if(match) {
+                        if (match) {
                             card.style.display = 'block'; // Show matched clones too
                         }
                     });
@@ -550,11 +609,14 @@
                 const image = card.dataset.itemImage;
                 const category = card.dataset.category;
 
-                if(document.getElementById('itemTitle')) document.getElementById('itemTitle').textContent = title;
-                if(document.getElementById('itemImage')) document.getElementById('itemImage').src = image || 'https://via.placeholder.com/300x200';
-                if(document.getElementById('itemDesc')) document.getElementById('itemDesc').textContent = desc || 'No description available.';
-                if(document.getElementById('itemPrice')) document.getElementById('itemPrice').textContent = 'Rp ' + (price ? price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') : '-');
-                if(document.getElementById('itemCategory')) document.getElementById('itemCategory').textContent = category;
+                if (document.getElementById('itemTitle')) document.getElementById('itemTitle').textContent = title;
+                if (document.getElementById('itemImage')) document.getElementById('itemImage').src = image ||
+                    'https://via.placeholder.com/300x200';
+                if (document.getElementById('itemDesc')) document.getElementById('itemDesc').textContent = desc ||
+                    'No description available.';
+                if (document.getElementById('itemPrice')) document.getElementById('itemPrice').textContent = 'Rp ' + (price ?
+                    price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') : '-');
+                if (document.getElementById('itemCategory')) document.getElementById('itemCategory').textContent = category;
 
                 const modal = document.getElementById('itemModal');
                 if (modal) modal.style.display = 'block';
